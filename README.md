@@ -1,12 +1,11 @@
-Role Name
-=========
+ansible-role-hidden-service
+===========================
 
-Install and configures a Tor Hidden Service
+[![Build Status](https://travis-ci.org/systemli/ansible-role-hidden-service.svg)](https://travis-ci.org/systemli/ansible-role-hidden-service)
 
-Requirements
-------------
+Install and configure a Tor Hidden Service.
+Hostname and ppivate key will be generated, if not supplied as variable.
 
-You already need a Hidden Service hostname and private key.
 
 Role Variables
 --------------
@@ -20,11 +19,9 @@ Role Variables
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
-         - { role: username.hiddenservice }
+         - { role: shadow.hiddenservice }
 
 License
 -------
