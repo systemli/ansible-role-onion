@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Install and iconfigures a Tor Hidden Service
+Install and configures a Tor Hidden Service
 
 Requirements
 ------------
