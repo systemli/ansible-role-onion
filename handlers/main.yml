@@ -1,0 +1,11 @@
+---
+# handlers file for hidden-service
+- name: restart tor
+  service:
+    name: tor
+    state: restarted
+
+- name: stop tor
+  service:
+    name: tor
+    state: stopped

@@ -1,0 +1,51 @@
+---
+# tasks file for hidden-service
+- name: add tor repository
+  apt_repository:
+    repo: "deb http://deb.torproject.org/torproject.org {{ ansible_distribution_release }} main"
+
+- name: download and import tor signing key
+  shell: gpg --keyserver keys.gnupg.net --recv 886DDD89 && gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
+
+- name: install tor package
+  apt:
+    pkg: tor
+    state: present
+  register: tor_is_installed
+
+- name: ensure hidden service directory is present
+  file:
+    path: /var/lib/tor/hidden_service/
+    owner: debian-tor
+    group: debian-tor
+    mode: 0700
+    state: directory
+
+- name: ensure hidden service configuration is latest
+  template:
+    src: torrc.j2
+    dest: /etc/tor/torrc
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart tor
+
+- name: ensure hostname and privatekey file are present
+  template:
+    src: "{{ item }}"
+    dest: "/var/lib/tor/hidden_service/{{ item }}"
+    owner: debian-tor
+    group: debian-tor
+    mode: 0600
+  with_items:
+    - hostname
+    - private_key
+  notify: restart tor
+
+# dirty hack to stop tor, when server is not the current hidden service,  restart handler above , would start tor with same url and private key on two hosts
+ - name: stop tor, if two servers are up, but only one should act as HS (for example jabber servers)
+   service:
+       name: tor
+       state: stopped
+   notify: stop tor
+   when: not hidden_service_active
