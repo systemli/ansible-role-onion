@@ -44,6 +44,8 @@
   with_items:
     - hostname
     - private_key
+  when: (hidden_service_hostname is defined) and
+        (hidden_service_private_key is defined)
   notify: restart tor
 
 # dirty hack to stop tor, when server is not the current hidden service,  restart handler above , would start tor with same url and private key on two hosts
