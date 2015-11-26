@@ -4,7 +4,7 @@ ansible-role-hidden-service
 [![Build Status](https://travis-ci.org/systemli/ansible-role-hidden-service.svg)](https://travis-ci.org/systemli/ansible-role-hidden-service)
 
 Install and configure a Tor Hidden Service.
-Hostname and ppivate key will be generated, if not supplied as variable.
+Hostname and private key will be generated, if not supplied as variable.
 
 
 Role Variables
