@@ -1,1 +1,1 @@
-{{ hidden_service_hostname }}
+{{ item.value.hidden_service_hostname }}
