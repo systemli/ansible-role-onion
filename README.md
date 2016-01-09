@@ -20,6 +20,29 @@ hidden_services:
      hidden_service_ports:
         - [22, 22]
      hidden_service_private_key:
+```
+
+Example Playbook
+----------------
+
+```
+    - hosts: servers
+      roles:
+         - { role: shadow.hiddenservice }
+```
+
+Extended Variables Example
+--------------------------
+
+```
+hidden_service_active: True
+
+hidden_services:
+  ssh:
+     hidden_service_hostname:
+     hidden_service_ports:
+        - [22, 22]
+     hidden_service_private_key:
   mail:
      hidden_service_hostname:
      hidden_service_ports:
@@ -38,13 +61,6 @@ hidden_services:
       key
       -----END RSA PRIVATE KEY-----
 ```
-
-Example Playbook
-----------------
-
-    - hosts: servers
-      roles:
-         - { role: shadow.hiddenservice }
 
 License
 -------
