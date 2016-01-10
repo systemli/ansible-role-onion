@@ -5,7 +5,10 @@ ansible-role-hidden-service
 
 
 Install and configure one or multiple Tor Hidden Services.
-Hostname and private key will be generated via tor restart, if not supplied as variable.
+
+Hostname and private key will be generated if not supplied as variable.
+
+Hint: It may take up to one minute, until the service is announced in the tor network and reachable.
 
 
 Role Variables
