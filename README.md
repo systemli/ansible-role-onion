@@ -10,12 +10,15 @@ Hostname and private key will be generated if not supplied as variable.
 
 Hint: It may take up to one minute, until the service is announced in the tor network and reachable.
 
+Be careful: Using the default 127.0.0.1 as Hidden Service IP-address could possibly leak meta data: https://help.riseup.net/en/security/network-security/tor/onionservices-best-practices#be-careful-of-localhost-bypasses
 
 Role Variables
 --------------
 
 ```
 hidden_service_active: True
+# This could possibly leak meta data such as /server-status on apache2!
+hidden_service_ipaddr: 127.0.0.1
 
 hidden_services:
   ssh:
@@ -39,6 +42,7 @@ Extended Variables Example
 
 ```
 hidden_service_active: True
+hidden_service_ipaddr: 192.168.3.12
 
 hidden_services:
   ssh:

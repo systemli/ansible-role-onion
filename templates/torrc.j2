@@ -71,7 +71,7 @@
 {% for servicename, hsproperties in hidden_services.iteritems() %}
 HiddenServiceDir /var/lib/tor/{{ servicename }}/
 {% for port in hsproperties['hidden_service_ports'] %}
-HiddenServicePort {{ port.0 }} 127.0.0.1:{{ port.1}}
+HiddenServicePort {{ port.0 }} {{ hidden_service_ipaddr }}:{{ port.1}}
 {% endfor %}
 
 {% endfor %}

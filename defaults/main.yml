@@ -1,6 +1,7 @@
 ---
 # defaults file for hidden-service
 hidden_service_active: True
+hidden_service_ipaddr: 127.0.0.1
 
 hidden_services:
   ssh:
