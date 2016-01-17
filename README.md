@@ -67,6 +67,18 @@ hidden_services:
       private
       key
       -----END RSA PRIVATE KEY-----
+  absenthiddenservice:
+     hidden_service_state: absent
+     hidden_service_hostname: onionurl.onion
+     hidden_service_ports:
+        - [25, 25]
+        - [587,587]
+     hidden_service_private_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      the
+      private
+      key
+      -----END RSA PRIVATE KEY-----
 ```
 
 License

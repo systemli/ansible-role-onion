@@ -69,11 +69,13 @@
 ## address y:z.
 
 {% for servicename, hsproperties in hidden_services.iteritems() %}
+{% if hsproperties['hidden_service_state']|default('present') != 'absent' %}
 HiddenServiceDir /var/lib/tor/{{ servicename }}/
 {% for port in hsproperties['hidden_service_ports'] %}
 HiddenServicePort {{ port.0 }} {{ hidden_service_ipaddr }}:{{ port.1}}
 {% endfor %}
 
+{% endif %}
 {% endfor %}
 
 #HiddenServiceDir /var/lib/tor/other_hidden_service/
