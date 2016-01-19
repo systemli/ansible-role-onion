@@ -24,7 +24,7 @@
     group: debian-tor
     mode: 0700
     state: directory
-  with_dict: "{{ hidden_services }}"
+  with_dict: hidden_services
   when: item.value.hidden_service_state|default('present') == 'present'
 
 - name: ensure hidden service configuration is latest
@@ -46,7 +46,7 @@
     group: debian-tor
     mode: 0600
     backup: yes
-  with_dict: "{{ hidden_services }}"
+  with_dict: hidden_services
   when: item.value.hidden_service_hostname is defined and
         item.value.hidden_service_hostname and
         item.value.hidden_service_state|default('present') == 'present'
@@ -60,7 +60,7 @@
     group: debian-tor
     mode: 0600
     backup: yes
-  with_dict: "{{ hidden_services }}"
+  with_dict:  hidden_services
   when: item.value.hidden_service_private_key is defined and
         item.value.hidden_service_private_key and
         item.value.hidden_service_state|default('present') == 'present'
@@ -73,7 +73,7 @@
     group: debian-tor
     mode: 0700
     state: absent
-  with_dict: "{{ hidden_services }}"
+  with_dict: hidden_services
   when: item.value.hidden_service_state|default('present') == "absent"
 
 # dirty hack to stop tor, when server is not the current hidden service,  restart handler above , would start tor with same url and private key on two hosts
