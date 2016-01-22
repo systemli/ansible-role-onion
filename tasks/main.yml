@@ -36,7 +36,6 @@
     mode: 0644
   notify:
     - restart tor
-    - show hostname
 
 - name: ensure hostname file are present
   template:
