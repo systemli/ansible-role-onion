@@ -26,6 +26,10 @@ hidden_services:
      hidden_service_ports:
         - [22, 22]
      hidden_service_private_key:
+
+hidden_services_configuration:
+  SocksPort: 9050
+  SocksPolicy: "reject *"
 ```
 
 Example Playbook
@@ -79,6 +83,18 @@ hidden_services:
       private
       key
       -----END RSA PRIVATE KEY-----
+
+hidden_services_configuration:
+  SocksPort: 9050
+  SocksPolicy: "reject *"
+  RunAsDaemon: 1
+  # Enabling Sandbox for the first time may prevent
+  # the tor service from restarting. Make sure your
+  # SSH connection is not over Tor when enabling it.
+  Sandbox: 1
+  FetchDirInfoEarly: 1
+  FetchDirInfoExtraEarly: 1
+  DataDirectory: /var/lib/tor
 ```
 
 License
