@@ -10,4 +10,7 @@ hidden_services:
         - [22, 22]
      hidden_service_private_key:
 
+hidden_services_configuration:
+  SocksPort: 9050
+  SocksPolicy: "reject *"
 
