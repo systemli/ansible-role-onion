@@ -76,6 +76,16 @@ hidden_service_services:
       -----END RSA PRIVATE KEY-----
 ```
 
+Testing & Development
+---------------------
+
+For developing and testing the role we use Travis CI and Vagrant. On the local environment you can easily test the role with
+
+```
+vagrant up trusty
+# other available releases are precise, wheezy and jessie
+```
+
 License
 -------
 

@@ -1,0 +1,8 @@
+- hosts: all
+  vars:
+    hidden_service_services:
+      ssh:
+         hidden_service_ports:
+            - [22, 22]
+  roles:
+    - ansible-role-hidden-service
