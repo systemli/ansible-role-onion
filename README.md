@@ -20,7 +20,10 @@ hidden_service_active: True
 # This could possibly leak meta data such as /server-status on apache2!
 hidden_service_ipaddr: 127.0.0.1
 hidden_service_tor_apt_state: present
-hidden_service_services: {}
+hidden_service_services:
+  ssh:
+    hidden_service_ports:
+      - [22, 22]
 ```
 
 Example Playbook
