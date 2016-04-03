@@ -9,4 +9,3 @@
   service:
     name: tor
     state: stopped
-
