@@ -19,13 +19,11 @@ Role Variables
 hidden_service_active: True
 # This could possibly leak meta data such as /server-status on apache2!
 hidden_service_ipaddr: 127.0.0.1
-
-hidden_services:
+hidden_service_tor_apt_state: present
+hidden_service_services:
   ssh:
-     hidden_service_hostname:
-     hidden_service_ports:
-        - [22, 22]
-     hidden_service_private_key:
+    hidden_service_ports:
+      - [22, 22]
 ```
 
 Example Playbook
@@ -44,7 +42,7 @@ Extended Variables Example
 hidden_service_active: True
 hidden_service_ipaddr: 192.168.3.12
 
-hidden_services:
+hidden_service_services:
   ssh:
      hidden_service_hostname:
      hidden_service_ports:
@@ -81,6 +79,16 @@ hidden_services:
       -----END RSA PRIVATE KEY-----
 ```
 
+Testing & Development
+---------------------
+
+For developing and testing the role we use Travis CI and Vagrant. On the local environment you can easily test the role with
+
+```
+vagrant up trusty
+# other available releases are precise, wheezy and jessie
+```
+
 License
 -------
 
@@ -90,5 +98,3 @@ Author Information
 ------------------
 
 https://www.systemli.org
-
-

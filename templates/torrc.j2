@@ -68,7 +68,7 @@
 ## HiddenServicePort x y:z says to redirect requests on port x to the
 ## address y:z.
 
-{% for servicename, hsproperties in hidden_services.iteritems() %}
+{% for servicename, hsproperties in hidden_service_services.iteritems() %}
 {% if hsproperties['hidden_service_state']|default('present') != 'absent' %}
 HiddenServiceDir /var/lib/tor/{{ servicename }}/
 {% for port in hsproperties['hidden_service_ports'] %}

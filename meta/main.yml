@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: shadow
-  description: Install and configure Tor Hidden Service
+  description: Install and configure Tor Hidden Services
   company: systemli.org
   license: GPLv3
   min_ansible_version: 1.7
