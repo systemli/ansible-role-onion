@@ -16,4 +16,6 @@ galaxy_info:
   - networking
   - system
   - web
+  notifications:
+    webhooks: https://galaxy.ansible.com/api/v1/notifications/
 dependencies: []
