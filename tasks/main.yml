@@ -22,6 +22,7 @@
     mode: 0700
     state: directory
   with_dict: "{{ hidden_service_services }}"
+  register: hidden_service_directory_creation_result
   when: item.value.hidden_service_state|default('present') == 'present'
 
 - name: ensure hidden service configuration is latest
@@ -71,6 +72,30 @@
     state: absent
   with_dict: "{{ hidden_service_services }}"
   when: item.value.hidden_service_state|default('present') == "absent"
+
+  # The hostname file won't be created until the tor service
+  # is reloaded, so bounce it before the `wait_for` task.
+- name: reload tor if service was created
+  service:
+    name: tor
+    state: reloaded
+  when: hidden_service_directory_creation_result|changed
+
+- name: wait for hidden service
+  wait_for:
+    path: "/var/lib/tor/{{ item.key }}/hostname"
+  with_dict: "{{ hidden_service_services }}"
+
+- name: read hidden service url
+  command: cat "/var/lib/tor/{{ item.key }}/hostname"
+  register: hidden_service_hostname_results
+  changed_when: false
+  with_dict: "{{ hidden_service_services }}"
+
+- name: display hidden service url
+  debug:
+    msg: >-
+      {{ lookup('template', role_path+'/templates/display_hostnames.j2') }}
 
 # dirty hack to stop tor, when server is not the current hidden service,  restart handler above , would start tor with same url and private key on two hosts
 - name: stop tor, if two servers are up, but only one should act as HS (for example jabber servers)
