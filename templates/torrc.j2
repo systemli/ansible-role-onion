@@ -60,7 +60,13 @@
 #CookieAuthentication 1
 
 {% for key, value in hidden_services_configuration.iteritems() %}
+{% if key == 'HidServAuth' %}
+{% for v in value %}
+HidServAuth {{ v }}
+{% endfor %}
+{% else %}
 {{ key }} {{ value }}
+{% endif %}
 {% endfor %}
 
 ############### This section is just for location-hidden services ###
@@ -78,6 +84,7 @@ HiddenServiceDir /var/lib/tor/{{ servicename }}/
 {% for port in hsproperties['hidden_service_ports'] %}
 HiddenServicePort {{ port.0 }} {{ hidden_service_ipaddr }}:{{ port.1}}
 {% endfor %}
+
 {% endif %}
 {% for client in hsproperties['hidden_service_authorized_clients']|default([]) %}
 HiddenServiceAuthorizeClient stealth {{ client }}
