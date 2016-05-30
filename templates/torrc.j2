@@ -78,8 +78,10 @@ HiddenServiceDir /var/lib/tor/{{ servicename }}/
 {% for port in hsproperties['hidden_service_ports'] %}
 HiddenServicePort {{ port.0 }} {{ hidden_service_ipaddr }}:{{ port.1}}
 {% endfor %}
-
 {% endif %}
+{% for client in hsproperties['hidden_service_authorized_clients']|default([]) %}
+HiddenServiceAuthorizeClient stealth {{ client }}
+{% endfor %}
 {% endfor %}
 
 #HiddenServiceDir /var/lib/tor/other_hidden_service/
