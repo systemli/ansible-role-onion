@@ -25,6 +25,7 @@ hidden_service_services:
      hidden_service_hostname:
      hidden_service_ports:
         - [22, 22]
+     hidden_service_authorized_clients: []
      hidden_service_private_key:
 
 hidden_services_configuration:
@@ -83,6 +84,13 @@ hidden_service_services:
       private
       key
       -----END RSA PRIVATE KEY-----
+
+hidden_service_services:
+  ssh:
+    hidden_service_ports:
+      - [22, 22]
+    hidden_service_authorized_clients:
+      - admin-{{ inventory_hostname }}
 
 hidden_services_configuration:
   SocksPort: 9050
