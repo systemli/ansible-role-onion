@@ -1,3 +1,3 @@
 {% for hs in hidden_service_hostname_results.results %}
-A hidden service for /var/lib/tor/{{ hs.item.key }}/ was created or the address is not present in your vars file. It's reachable via '{{ hs.stdout }}'. Don't forget to add hostname and privatekey to your vars file.
+{% if hs.stdout is defined %}A hidden service for /var/lib/tor/{{ hs.item.key }}/ was created or the address is not present in your vars file. It's reachable via '{{ hs.stdout }}'. Don't forget to add hostname and privatekey to your vars file.{% endif %}
 {% endfor %}
