@@ -60,14 +60,12 @@
 #CookieAuthentication 1
 
 {% for key, value in hidden_services_configuration.iteritems() %}
-{% if key == 'HidServAuth' %}
-{% for v in value %}
-HidServAuth {{ v }}
-{% endfor %}
-{% else %}
 {{ key }} {{ value }}
-{% endif %}
 {% endfor %}
+
+{% for client in hidden_service_hid_serv_auth -%}
+HidServAuth {{ client }}
+{% endfor -%}
 
 ############### This section is just for location-hidden services ###
 

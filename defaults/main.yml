@@ -14,4 +14,8 @@ hidden_services_configuration:
   SocksPort: 9050
   SocksPolicy: "reject *"
 
+# List of auth cookies for connecting to Authenticated Tor Hidden Services.
+#
+hidden_service_hid_serv_auth: []
+
 hidden_service_monit_enabled: False

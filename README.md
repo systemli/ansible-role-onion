@@ -103,6 +103,13 @@ hidden_services_configuration:
   FetchDirInfoEarly: 1
   FetchDirInfoExtraEarly: 1
   DataDirectory: /var/lib/tor
+
+# Hosts that specified `hidden_service_authorized_clients` will generate
+# auth cookies for restricted access. Collect those values from the
+# hostname file and add them to the torrc for intended clients, e.g.
+# the Ansible controller, via the list var below.
+hidden_service_hid_serv_auth:
+  - "r7w3xdf3r5smxokv.onion p0xMVci7ffeQFA4IWkcBxR # client: admin"
 ```
 
 Testing & Development
