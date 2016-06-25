@@ -90,7 +90,7 @@ hidden_service_services:
     hidden_service_ports:
       - [22, 22]
     hidden_service_authorized_clients:
-      - admin-{{ inventory_hostname }}
+      - admin
 
 hidden_services_configuration:
   SocksPort: 9050
