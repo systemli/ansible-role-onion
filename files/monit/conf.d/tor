@@ -1,0 +1,4 @@
+check process tor with pidfile /var/run/tor/tor.pid
+    start program = "/usr/sbin/service tor start" with timeout 60 seconds
+    stop program  = "/usr/sbin/service tor stop"
+    group server

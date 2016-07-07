@@ -104,3 +104,6 @@
      state: stopped
   notify: stop tor
   when: not hidden_service_active
+
+- include: monit.yml
+  when: hidden_service_monit_enabled

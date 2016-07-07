@@ -9,3 +9,8 @@
   service:
     name: tor
     state: stopped
+
+- name: restart monit
+  service:
+    name: monit
+    state: restarted
