@@ -25,6 +25,7 @@ hidden_service_services:
      hidden_service_hostname:
      hidden_service_ports:
         - [22, 22]
+     hidden_service_authorized_clients: []
      hidden_service_private_key:
 
 hidden_services_configuration:
@@ -84,6 +85,13 @@ hidden_service_services:
       key
       -----END RSA PRIVATE KEY-----
 
+hidden_service_services:
+  ssh:
+    hidden_service_ports:
+      - [22, 22]
+    hidden_service_authorized_clients:
+      - admin
+
 hidden_services_configuration:
   SocksPort: 9050
   SocksPolicy: "reject *"
@@ -95,6 +103,13 @@ hidden_services_configuration:
   FetchDirInfoEarly: 1
   FetchDirInfoExtraEarly: 1
   DataDirectory: /var/lib/tor
+
+# Hosts that specified `hidden_service_authorized_clients` will generate
+# auth cookies for restricted access. Collect those values from the
+# hostname file and add them to the torrc for intended clients, e.g.
+# the Ansible controller, via the list var below.
+hidden_service_hid_serv_auth:
+  - "r7w3xdf3r5smxokv.onion p0xMVci7ffeQFA4IWkcBxR # client: admin"
 ```
 
 Testing & Development

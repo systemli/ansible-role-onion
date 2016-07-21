@@ -90,7 +90,7 @@
   register: hidden_service_hostname_results
   changed_when: false
   with_dict: "{{ hidden_service_services }}"
-  when: not item.value.hidden_service_hostname
+  when: not item.value.hidden_service_hostname|default(false)
 
 - name: display hidden service url
   debug:
