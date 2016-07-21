@@ -16,21 +16,27 @@ Role Variables
 --------------
 
 ```
+# defaults file for hidden-service
 hidden_service_active: True
-# This could possibly leak meta data such as /server-status on apache2!
 hidden_service_ipaddr: 127.0.0.1
 hidden_service_tor_apt_state: present
 hidden_service_services:
   ssh:
-     hidden_service_hostname:
-     hidden_service_ports:
-        - [22, 22]
-     hidden_service_authorized_clients: []
-     hidden_service_private_key:
+    hidden_service_hostname:
+    hidden_service_ports:
+      - [22, 22]
+    hidden_service_authorized_clients: []
+    hidden_service_private_key:
 
 hidden_services_configuration:
   SocksPort: 9050
   SocksPolicy: "reject *"
+
+# List of auth cookies for connecting to Authenticated Tor Hidden Services.
+#
+hidden_service_hid_serv_auth: []
+
+hidden_service_monit_enabled: False
 ```
 
 Example Playbook
