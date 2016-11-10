@@ -2,6 +2,9 @@
 - name: ensure the repository key is present
   apt_key:
     data: "{{ lookup('file', 'torproject.asc') }}"
+    # Explicitly declaring keyring path to match what's configured by the
+    # `deb.torproject.org-keyring` package.
+    keyring: /etc/apt/trusted.gpg.d/deb.torproject.org-keyring.gpg
     state: present
 
 - name: ensure the required repository is present
@@ -12,6 +15,12 @@
   apt:
     pkg: tor
     state: "{{ hidden_service_tor_apt_state }}"
+
+- name: install extra tor packages
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items: "{{ hidden_service_apt_packages }}"
 
 - name: ensure hidden service directory is present
   file:
