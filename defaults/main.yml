@@ -3,6 +3,7 @@
 hidden_service_active: True
 hidden_service_ipaddr: 127.0.0.1
 hidden_service_tor_apt_state: present
+hidden_service_apt_packages: ['deb.torproject.org-keyring']
 hidden_service_services:
   ssh:
     hidden_service_hostname:
