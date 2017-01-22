@@ -1,7 +1,7 @@
 ansible-role-hidden-service
 ===========================
 
-[![Build Status](https://travis-ci.org/systemli/ansible-role-hidden-service.svg)](https://travis-ci.org/systemli/ansible-role-hidden-service) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-hiddenservice-blue.svg)](https://galaxy.ansible.com/detail#/role/6317)
+[![Build Status](https://travis-ci.org/systemli/ansible-role-hidden-service.svg)](https://travis-ci.org/systemli/ansible-role-hidden-service) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-hiddenservice-blue.svg)](https://galaxy.ansible.com/systemli/hidden-service/)
 
 
 Install and configure one or multiple Tor Hidden Services.
@@ -39,13 +39,20 @@ hidden_service_hid_serv_auth: []
 hidden_service_monit_enabled: False
 ```
 
+Download
+--------
+
+Download latest release with `ansible-galaxy`
+
+	ansible-galaxy install systemli.hidden-service
+
 Example Playbook
 ----------------
 
 ```
     - hosts: servers
       roles:
-         - { role: shadow.hiddenservice }
+         - { role: systemli.hidden-service }
 ```
 
 Extended Variables Example
