@@ -1,21 +1,21 @@
 ---
 galaxy_info:
-  author: shadow
+  author: systemli
   description: Install and configure Tor Hidden Services
   company: systemli.org
   license: GPLv3
-  min_ansible_version: 1.7
+  min_ansible_version: 1.9.6
   platforms:
   - name: Ubuntu
     versions:
-    - all
+      - all
   - name: Debian
     versions:
-    - all
+      - all
   categories:
-  - networking
-  - system
-  - web
+    - networking
+    - system
+    - web
   notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
 dependencies: []
