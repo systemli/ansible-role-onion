@@ -1,10 +1,16 @@
 ---
 language: python
 python: "2.7"
+dist: trusty
+
+notifications:
+    webhooks: https://galaxy.ansible.com/api/v1/notifications/
 
 env:
-  - ANSIBLE_VERSION=1.9.5
-  - ANSIBLE_VERSION=2.0.1.0
+  - ANSIBLE_VERSION=1.9.6
+  - ANSIBLE_VERSION=2.0.2.0
+  - ANSIBLE_VERSION=2.1.4.0
+  - ANSIBLE_VERSION=2.2.1.0
 
 before_install:
   - sudo apt-get update -qq
@@ -13,12 +19,15 @@ install:
   # Install Ansible.
   - pip install ansible==$ANSIBLE_VERSION
 
+  # Add ansible.cfg to pick up roles path.
+  - printf "[defaults]\nroles_path = ../" > ansible.cfg
+
 script:
   # Check the role/playbook's syntax.
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
 
   # Run the role/playbook with ansible-playbook.
-  - ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo -vvvv
+  - ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
