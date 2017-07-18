@@ -1,1 +1,2 @@
-.vagrant
+.molecule
+.tox

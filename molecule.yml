@@ -1,0 +1,20 @@
+---
+molecule:
+  ignore_paths:
+    - .cache
+    - .git
+    - .molecule
+    - .tox
+_disabled:
+  - ansible_lint
+ansible:
+  playbook: tests/test.yml
+driver:
+  name: docker
+docker:
+  containers:
+    - name: hidden-service-debian
+      image: maint/debian-systemd
+      image_version: latest
+      privileged: True
+dependency: []
