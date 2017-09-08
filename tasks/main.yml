@@ -1,3 +1,4 @@
+---
 # tasks file for hidden-service
 - name: ensure the repository key is present
   apt_key:
@@ -65,7 +66,7 @@
     group: debian-tor
     mode: 0600
     backup: yes
-  with_dict:  "{{ hidden_service_services }}"
+  with_dict: "{{ hidden_service_services }}"
   when: item.value.hidden_service_private_key is defined and
         item.value.hidden_service_private_key and
         item.value.hidden_service_state|default('present') == 'present'
@@ -106,11 +107,13 @@
     msg: >-
       {{ lookup('template', role_path+'/templates/display_hostnames.j2') }}
 
-# dirty hack to stop tor, when server is not the current hidden service,  restart handler above , would start tor with same url and private key on two hosts
-- name: stop tor, if two servers are up, but only one should act as HS (for example jabber servers)
+# dirty hack to stop tor, when server is not the current hidden service,
+# restart handler above , would start tor with
+# same url and private key on two hosts
+- name: stop tor, (two servers are up, only one should act as HS)
   service:
-     name: tor
-     state: stopped
+    name: tor
+    state: stopped
   notify: stop tor
   when: not hidden_service_active
 

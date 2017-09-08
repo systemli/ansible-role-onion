@@ -1,3 +1,4 @@
+---
 - name: ensure monit configs are present
   copy:
     src: "monit/conf.d/{{ item }}"

@@ -3,6 +3,8 @@
 
 VAGRANTFILE_API_VERSION = "2"
 
+ENV['ANSIBLE_ROLES_PATH'] = "#{File.dirname(__FILE__)}/../"
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # VirtualBox.
   config.vm.provider :virtualbox do |v|

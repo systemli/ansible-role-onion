@@ -1,0 +1,28 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+  enabled: False
+platforms:
+  - name: hidden-service-debian-jessie
+    image: maint/debian-systemd
+    image_version: latest
+    privileged: "True"
+  - name: hidden-service-ubuntu-trusty
+    image: ubuntu
+    image_version: 16.04
+    privileged: "True"
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+    enabled: False
+scenario:
+  name: default
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
