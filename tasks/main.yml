@@ -1,5 +1,12 @@
 ---
 # tasks file for hidden-service
+
+- name: ensure gpg2 is installed on debian stretch
+  apt:
+    pkg: gnupg2
+    state: latest
+  when: ansible_distribution_major_version|int >= 9
+
 - name: ensure the repository key is present
   apt_key:
     data: "{{ lookup('file', 'torproject.asc') }}"
@@ -94,13 +101,14 @@
   wait_for:
     path: "/var/lib/tor/{{ item.key }}/hostname"
   with_dict: "{{ hidden_service_services }}"
+  when: item.value.hidden_service_state|default('present') != "absent"
 
 - name: read hidden service url
   command: cat "/var/lib/tor/{{ item.key }}/hostname"
   register: hidden_service_hostname_results
   changed_when: false
   with_dict: "{{ hidden_service_services }}"
-  when: not item.value.hidden_service_hostname|default(false)
+  when: not item.value.hidden_service_hostname|default(false) and item.value.hidden_service_state|default('present') != "absent"
 
 - name: display hidden service url
   debug:
