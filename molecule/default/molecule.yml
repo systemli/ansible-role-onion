@@ -7,25 +7,25 @@ lint:
   name: yamllint
   enabled: False
 platforms:
-  - name: debian-stretch
-    image: geerlingguy/docker-debian9-ansible
-    privileged: True
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
+#  - name: debian-stretch
+#    image: geerlingguy/docker-debian9-ansible
+#    privileged: True
+#    volumes:
+#      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#    command: /lib/systemd/systemd
   - name: debian-jessie
     image: geerlingguy/docker-debian8-ansible
     privileged: True
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /lib/systemd/systemd
-  - name: service-ubuntu-trusty
-    image: ubuntu
-    image_version: 16.04
-    privileged: "True"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
+#  - name: ubuntu-trusty
+#    image: ubuntu
+#    image_version: 16.04
+#    privileged: "True"
+#    volumes:
+#      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#    command: /lib/systemd/systemd
 provisioner:
   name: ansible
   options:
