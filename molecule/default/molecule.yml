@@ -7,16 +7,29 @@ lint:
   name: yamllint
   enabled: False
 platforms:
-  - name: hidden-service-debian-jessie
-    image: maint/debian-systemd
-    image_version: latest
-    privileged: "True"
-  - name: hidden-service-ubuntu-trusty
+  - name: debian-stretch
+    image: geerlingguy/docker-debian9-ansible
+    privileged: True
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+  - name: debian-jessie
+    image: geerlingguy/docker-debian8-ansible
+    privileged: True
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+  - name: service-ubuntu-trusty
     image: ubuntu
     image_version: 16.04
     privileged: "True"
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
 provisioner:
   name: ansible
+  options:
+    skip-tags: molecule_test_skip
   lint:
     name: ansible-lint
     enabled: False
