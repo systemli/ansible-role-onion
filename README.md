@@ -12,6 +12,8 @@ Hint: It may take up to one minute, until the service is announced in the tor ne
 
 Be careful: Using the default 127.0.0.1 as Hidden Service IP-address could possibly leak meta data: https://help.riseup.net/en/security/network-security/tor/onionservices-best-practices#be-careful-of-localhost-bypasses
 
+Supports [Next Gen Onion Services](https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service) only if tor version >= [0.3.2.1](https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler)!
+
 Role Variables
 --------------
 
@@ -97,6 +99,22 @@ hidden_service_services:
       private
       key
       -----END RSA PRIVATE KEY-----
+  #
+  # nextgeneration hiddenservice only available in tor >= 0.3.2.1
+  # https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service
+  #
+  nextgenhiddenservice:
+     hidden_service_hostname:
+     hidden_service_version: 3
+     hidden_service_ports:
+        - [25, 25] 
+        - [587,587]
+     hidden_service_private_key:
+
+
+#
+# Example for torrc with special hidden service configurations
+# such as Sandboxing, custom data directory, auth cookies ...
 
 hidden_service_services:
   ssh:

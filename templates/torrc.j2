@@ -79,6 +79,9 @@ HidServAuth {{ client }}
 {% for servicename, hsproperties in hidden_service_services.iteritems() %}
 {% if hsproperties['hidden_service_state']|default('present') != 'absent' %}
 HiddenServiceDir /var/lib/tor/{{ servicename }}/
+{% if hsproperties['hidden_service_version']|default(2) == 3 %}
+HiddenServiceVersion 3
+{% endif %}
 {% for port in hsproperties['hidden_service_ports'] %}
 HiddenServicePort {{ port.0 }} {{ hidden_service_ipaddr }}:{{ port.1}}
 {% endfor %}
