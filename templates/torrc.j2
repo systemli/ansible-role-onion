@@ -80,7 +80,7 @@ HidServAuth {{ client }}
 {% for servicename, hsproperties in hidden_service_services.iteritems() %}
 {% if hsproperties['hidden_service_state']|default('present') != 'absent' %}
 HiddenServiceDir /var/lib/tor/{{ servicename }}/
-{% if hsproperties['hidden_service_version']|default(2) == 3 %}
+{% if hsproperties['hidden_service_version']|default(2) == 3 and tor_version.stdout|version_compare('3.2.1', '>=', strict=True) %}
 HiddenServiceVersion 3
 {% endif %}
 {% for port in hsproperties['hidden_service_ports'] %}

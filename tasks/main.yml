@@ -24,6 +24,18 @@
     pkg: tor
     state: "{{ hidden_service_tor_apt_state }}"
 
+  #
+  # - removed trailing 0: 0.3.2.1 --> 3.2.1
+  # - jinja2 filter compare version is allowing max. two dots (https://pizjix.com/version-numbers-in-ansible-code/)
+  # - comparision is needed as safety, to not deploy hidden services in version 3,
+  #   if the tor version does not support it
+  #
+- name: register version of tor
+  shell: "tor --version | cut -d' ' -f3 | cut -d. -f2-"
+  register: tor_version
+  check_mode: no
+  changed_when: false
+
 - name: install extra tor packages
   apt:
     pkg: "{{ item }}"
