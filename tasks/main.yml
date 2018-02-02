@@ -4,7 +4,7 @@
 - name: ensure gpg2 is installed on debian stretch
   apt:
     pkg: gnupg2
-    state: latest
+    state: present
   when: ansible_distribution_major_version|int >= 9
 
 - name: ensure the repository key is present
