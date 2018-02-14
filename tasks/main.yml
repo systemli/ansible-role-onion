@@ -106,7 +106,7 @@
 - name: reload tor if service was created
   service:
     name: tor
-    state: reloaded
+    state: restarted
   when: hidden_service_directory_creation_result|changed
 
 - name: wait for hidden service
