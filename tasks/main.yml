@@ -133,6 +133,7 @@
 - name: stop tor, (two servers are up, only one should act as HS)
   service:
     name: tor
+    enabled: no
     state: stopped
   notify: stop tor
   when: not hidden_service_active
