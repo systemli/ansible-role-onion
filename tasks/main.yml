@@ -7,13 +7,11 @@
     state: present
   when: ansible_distribution_major_version|int >= 9
 
+# required to allow installation of packages from torproject repo
 - name: ensure the repository key is present
   apt_key:
     data: "{{ lookup('file', 'torproject.asc') }}"
-    # Explicitly declaring keyring path to match what's configured by the
-    # `deb.torproject.org-keyring` package.
-    keyring: /etc/apt/trusted.gpg.d/deb.torproject.org-keyring.gpg
-    state: present
+    state: "{{ hidden_service_tor_apt_state }}"
 
 - name: ensure the required repository is present
   apt_repository:
