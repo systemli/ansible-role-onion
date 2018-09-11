@@ -105,7 +105,7 @@
   service:
     name: tor
     state: restarted
-  when: hidden_service_directory_creation_result|changed
+  when: hidden_service_directory_creation_result is changed
 
 - name: wait for hidden service
   wait_for:
