@@ -4,7 +4,7 @@ ansible-role-onion
 [![Build Status](https://travis-ci.org/systemli/ansible-role-onion.svg)](https://travis-ci.org/systemli/ansible-role-onion) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-onion-blue.svg)](https://galaxy.ansible.com/systemli/onion/)
 
 
-Install and configure one or multiple Tor Onion Services.
+Install and configure one or multiple Tor Onion Services (formerly known as Hidden Services).
 
 Hostname and private key will be generated if not supplied as variable.
 
@@ -13,6 +13,8 @@ Hint: It may take up to one minute, until the service is announced in the tor ne
 Be careful: Using the default 127.0.0.1 as Onion Service IP-address could possibly leak meta data: https://help.riseup.net/en/security/network-security/tor/onionservices-best-practices#be-careful-of-localhost-bypasses
 
 Supports [Next Gen Onion Services](https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service) only if tor version >= [0.3.2.1](https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler)!
+
+Testing with [Molecule](http://molecule.readthedocs.io/).
 
 Role Variables
 --------------
@@ -146,11 +148,11 @@ onion_hid_serv_auth:
 Testing & Development
 ---------------------
 
-For developing and testing the role we use Travis CI and Vagrant. On the local environment you can easily test the role with
+For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
 
 ```
-vagrant up trusty
-# other available releases are precise, wheezy and jessie
+vagrant up stretch
+# other available releases are trusty, precise, and wheezy
 ```
 
 License

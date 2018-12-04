@@ -13,9 +13,11 @@ galaxy_info:
     - name: Debian
       versions:
         - all
-  categories:
+  galaxy_tags:
+    - hidden-service
     - networking
     - system
+    - tor
     - web
   notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
