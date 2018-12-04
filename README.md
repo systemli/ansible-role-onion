@@ -4,7 +4,7 @@ ansible-role-onion
 [![Build Status](https://travis-ci.org/systemli/ansible-role-onion.svg)](https://travis-ci.org/systemli/ansible-role-onion) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-onion-blue.svg)](https://galaxy.ansible.com/systemli/onion/)
 
 
-Install and configure one or multiple Tor Onion Services.
+Install and configure one or multiple Tor Onion Services (formerly known as Hidden Services).
 
 Hostname and private key will be generated if not supplied as variable.
 
