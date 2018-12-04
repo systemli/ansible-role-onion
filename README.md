@@ -1,16 +1,16 @@
-ansible-role-hidden-service
+ansible-role-onion
 ===========================
 
-[![Build Status](https://travis-ci.org/systemli/ansible-role-hidden-service.svg)](https://travis-ci.org/systemli/ansible-role-hidden-service) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-hiddenservice-blue.svg)](https://galaxy.ansible.com/systemli/hidden-service/)
+[![Build Status](https://travis-ci.org/systemli/ansible-role-onion.svg)](https://travis-ci.org/systemli/ansible-role-onion) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-onion-blue.svg)](https://galaxy.ansible.com/systemli/onion/)
 
 
-Install and configure one or multiple Tor Hidden Services.
+Install and configure one or multiple Tor Onion Services.
 
 Hostname and private key will be generated if not supplied as variable.
 
 Hint: It may take up to one minute, until the service is announced in the tor network and reachable.
 
-Be careful: Using the default 127.0.0.1 as Hidden Service IP-address could possibly leak meta data: https://help.riseup.net/en/security/network-security/tor/onionservices-best-practices#be-careful-of-localhost-bypasses
+Be careful: Using the default 127.0.0.1 as Onion Service IP-address could possibly leak meta data: https://help.riseup.net/en/security/network-security/tor/onionservices-best-practices#be-careful-of-localhost-bypasses
 
 Supports [Next Gen Onion Services](https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service) only if tor version >= [0.3.2.1](https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler)!
 
@@ -18,27 +18,27 @@ Role Variables
 --------------
 
 ```
-# defaults file for hidden-service
-hidden_service_active: True
-hidden_service_ipaddr: 127.0.0.1
-hidden_service_tor_apt_state: present
-hidden_service_services:
+# defaults file for onion
+onion_active: True
+onion_ipaddr: 127.0.0.1
+onion_tor_apt_state: present
+onion_services:
   ssh:
-    hidden_service_hostname:
-    hidden_service_ports:
+    onion_hostname:
+    onion_ports:
       - [22, 22]
-    hidden_service_authorized_clients: []
-    hidden_service_private_key:
+    onion_authorized_clients: []
+    onion_private_key:
 
-hidden_services_configuration:
+onions_configuration:
   SocksPort: 9050
   SocksPolicy: "reject *"
 
-# List of auth cookies for connecting to Authenticated Tor Hidden Services.
+# List of auth cookies for connecting to Authenticated Tor Onion Services.
 #
-hidden_service_hid_serv_auth: []
+onion_hid_serv_auth: []
 
-hidden_service_monit_enabled: False
+onion_monit_enabled: False
 ```
 
 Download
@@ -46,7 +46,7 @@ Download
 
 Download latest release with `ansible-galaxy`
 
-	ansible-galaxy install systemli.hidden-service
+	ansible-galaxy install systemli.onion
 
 Example Playbook
 ----------------
@@ -54,76 +54,76 @@ Example Playbook
 ```
     - hosts: servers
       roles:
-         - { role: systemli.hidden-service }
+         - { role: systemli.onion }
 ```
 
 Extended Variables Example
 --------------------------
 
 ```
-hidden_service_active: True
-hidden_service_ipaddr: 192.168.3.12
+onion_active: True
+onion_ipaddr: 192.168.3.12
 
-hidden_service_services:
+onion_services:
   ssh:
-     hidden_service_hostname:
-     hidden_service_ports:
+     onion_hostname:
+     onion_ports:
         - [22, 22]
-     hidden_service_private_key:
+     onion_private_key:
   mail:
-     hidden_service_hostname:
-     hidden_service_ports:
+     onion_hostname:
+     onion_ports:
         - [25, 25] #[redirected_from, redirected_to]
         - [587,587]
-     hidden_service_private_key:
+     onion_private_key:
   examplewithhostname:
-     hidden_service_hostname: onionurl.onion
-     hidden_service_ports:
+     onion_hostname: onionurl.onion
+     onion_ports:
         - [25, 25]
         - [587,587]
-     hidden_service_private_key: |
+     onion_private_key: |
       -----BEGIN RSA PRIVATE KEY-----
       the
       private
       key
       -----END RSA PRIVATE KEY-----
-  absenthiddenservice:
-     hidden_service_state: absent
-     hidden_service_hostname: onionurl.onion
-     hidden_service_ports:
+  absentonion:
+     onion_state: absent
+     onion_hostname: onionurl.onion
+     onion_ports:
         - [25, 25]
         - [587,587]
-     hidden_service_private_key: |
+     onion_private_key: |
       -----BEGIN RSA PRIVATE KEY-----
       the
       private
       key
       -----END RSA PRIVATE KEY-----
   #
-  # nextgeneration hiddenservice only available in tor >= 0.3.2.1
+  # nextgeneration onion only available in tor >= 0.3.2.1
   # https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service
   #
-  nextgenhiddenservice:
-     hidden_service_hostname:
-     hidden_service_version: 3
-     hidden_service_ports:
+  nextgenonion:
+     onion_hostname:
+     onion_version: 3
+     onion_ports:
         - [25, 25] 
         - [587,587]
-     hidden_service_private_key:
+     onion_private_key:
 
 
 #
-# Example for torrc with special hidden service configurations
+# Example for torrc with special onion configurations
 # such as Sandboxing, custom data directory, auth cookies ...
 
-hidden_service_services:
+onion_services:
   ssh:
-    hidden_service_ports:
+    onion_ports:
       - [22, 22]
-    hidden_service_authorized_clients:
+    onion_authorized_clients:
       - admin
 
-hidden_services_configuration:
+onions_configuration:
   SocksPort: 9050
   SocksPolicy: "reject *"
   RunAsDaemon: 1
@@ -135,11 +135,11 @@ hidden_services_configuration:
   FetchDirInfoExtraEarly: 1
   DataDirectory: /var/lib/tor
 
-# Hosts that specified `hidden_service_authorized_clients` will generate
+# Hosts that specified `onion_authorized_clients` will generate
 # auth cookies for restricted access. Collect those values from the
 # hostname file and add them to the torrc for intended clients, e.g.
 # the Ansible controller, via the list var below.
-hidden_service_hid_serv_auth:
+onion_hid_serv_auth:
   - "r7w3xdf3r5smxokv.onion p0xMVci7ffeQFA4IWkcBxR # client: admin"
 ```
 

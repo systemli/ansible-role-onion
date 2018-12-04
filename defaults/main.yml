@@ -1,22 +1,22 @@
 ---
-# defaults file for hidden-service
-hidden_service_active: True
-hidden_service_ipaddr: 127.0.0.1
-hidden_service_tor_apt_state: present
-hidden_service_apt_packages: ['deb.torproject.org-keyring']
-hidden_service_services:
+# defaults file for onion
+onion_active: True
+onion_ipaddr: 127.0.0.1
+onion_tor_apt_state: present
+onion_apt_packages: ['deb.torproject.org-keyring']
+onion_services:
   ssh:
-    hidden_service_hostname:
-    hidden_service_ports:
+    onion_hostname:
+    onion_ports:
       - [22, 22]
-    hidden_service_authorized_clients: []
+    onion_authorized_clients: []
 
-hidden_services_configuration:
+onions_configuration:
   SocksPort: 9050
   SocksPolicy: "reject *"
 
 # List of auth cookies for connecting to Authenticated Tor Hidden Services.
 #
-hidden_service_hid_serv_auth: []
+onion_hid_serv_auth: []
 
-hidden_service_monit_enabled: False
+onion_monit_enabled: False

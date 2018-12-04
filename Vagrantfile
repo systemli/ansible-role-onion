@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Ansible.
     precise.vm.provision "ansible" do |ansible|
       ansible.playbook = "vagrant.yml"
-      ansible.sudo = true
+      ansible.become = true
     end
   end
 
@@ -32,7 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Ansible.
     trusty.vm.provision "ansible" do |ansible|
       ansible.playbook = "vagrant.yml"
-      ansible.sudo = true
+      ansible.become = true
     end
   end
 
@@ -44,19 +44,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Ansible.
     wheezy.vm.provision "ansible" do |ansible|
       ansible.playbook = "vagrant.yml"
-      ansible.sudo = true
+      ansible.become = true
     end
   end
 
-  # Debian Jessie
-  config.vm.define "jessie", primary: true do |jessie|
-    jessie.vm.hostname = "jessie"
-    jessie.vm.box = "debian/jessie64"
+  # Debian stretch
+  config.vm.define "stretch", primary: true do |stretch|
+    stretch.vm.hostname = "stretch"
+    stretch.vm.box = "debian/stretch64"
 
     # Ansible.
-    jessie.vm.provision "ansible" do |ansible|
+    stretch.vm.provision "ansible" do |ansible|
       ansible.playbook = "vagrant.yml"
-      ansible.sudo = true
+      ansible.become = true
     end
   end
 end

@@ -1,9 +1,9 @@
 ---
 - hosts: all
   vars:
-    hidden_service_services:
+    onion_services:
       ssh:
-        hidden_service_ports:
+        onion_ports:
           - [22, 22]
   roles:
-    - ansible-role-hidden-service
+    - ansible-role-onion

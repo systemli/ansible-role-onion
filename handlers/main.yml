@@ -1,5 +1,5 @@
 ---
-# handlers file for hidden-service
+# handlers file for onion
 - name: restart tor
   service:
     name: tor

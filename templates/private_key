@@ -1,1 +1,1 @@
-{{ item.value.hidden_service_private_key }}
+{{ item.value.onion_private_key }}

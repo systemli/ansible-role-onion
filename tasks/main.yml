@@ -1,5 +1,5 @@
 ---
-# tasks file for hidden-service
+# tasks file for onion
 
 - name: ensure gpg2 is installed on debian stretch
   apt:
@@ -11,7 +11,7 @@
 - name: ensure the repository key is present
   apt_key:
     data: "{{ lookup('file', 'torproject.asc') }}"
-    state: "{{ hidden_service_tor_apt_state }}"
+    state: "{{ onion_tor_apt_state }}"
 
 - name: ensure the required repository is present
   apt_repository:
@@ -20,12 +20,12 @@
 - name: ensure tor is installed
   apt:
     pkg: tor
-    state: "{{ hidden_service_tor_apt_state }}"
+    state: "{{ onion_tor_apt_state }}"
 
   #
   # - removed trailing 0: 0.3.2.1 --> 3.2.1
   # - jinja2 filter compare version is allowing max. two dots (https://pizjix.com/version-numbers-in-ansible-code/)
-  # - comparision is needed as safety, to not deploy hidden services in version 3,
+  # - comparision is needed as safety, to not deploy onions in version 3,
   #   if the tor version does not support it
   #
 - name: register version of tor
@@ -36,22 +36,21 @@
 
 - name: install extra tor packages
   apt:
-    pkg: "{{ item }}"
+    pkg: "{{ onion_apt_packages }}"
     state: present
-  with_items: "{{ hidden_service_apt_packages }}"
 
-- name: ensure hidden service directory is present
+- name: ensure onion directory is present
   file:
     path: "/var/lib/tor/{{ item.key }}/"
     owner: debian-tor
     group: debian-tor
     mode: 0700
     state: directory
-  with_dict: "{{ hidden_service_services }}"
-  register: hidden_service_directory_creation_result
-  when: item.value.hidden_service_state|default('present') == 'present'
+  with_dict: "{{ onion_services }}"
+  register: onion_directory_creation_result
+  when: item.value.onion_state|default('present') == 'present'
 
-- name: ensure hidden service configuration is latest
+- name: ensure onion configuration is latest
   template:
     src: torrc.j2
     dest: /etc/tor/torrc
@@ -69,10 +68,10 @@
     group: debian-tor
     mode: 0600
     backup: yes
-  with_dict: "{{ hidden_service_services }}"
-  when: item.value.hidden_service_hostname is defined and
-        item.value.hidden_service_hostname and
-        item.value.hidden_service_state|default('present') == 'present'
+  with_dict: "{{ onion_services }}"
+  when: item.value.onion_hostname is defined and
+        item.value.onion_hostname and
+        item.value.onion_state|default('present') == 'present'
   notify: restart tor
 
 - name: ensure private_key file are present
@@ -83,21 +82,21 @@
     group: debian-tor
     mode: 0600
     backup: yes
-  with_dict: "{{ hidden_service_services }}"
-  when: item.value.hidden_service_private_key is defined and
-        item.value.hidden_service_private_key and
-        item.value.hidden_service_state|default('present') == 'present'
+  with_dict: "{{ onion_services }}"
+  when: item.value.onion_private_key is defined and
+        item.value.onion_private_key and
+        item.value.onion_state|default('present') == 'present'
   notify: restart tor
 
-- name: ensure hidden service directory is absent
+- name: ensure onion directory is absent
   file:
     path: "/var/lib/tor/{{ item.key }}/"
     owner: debian-tor
     group: debian-tor
     mode: 0700
     state: absent
-  with_dict: "{{ hidden_service_services }}"
-  when: item.value.hidden_service_state|default('present') == "absent"
+  with_dict: "{{ onion_services }}"
+  when: item.value.onion_state|default('present') == "absent"
 
   # The hostname file won't be created until the tor service
   # is reloaded, so bounce it before the `wait_for` task.
@@ -105,27 +104,27 @@
   service:
     name: tor
     state: restarted
-  when: hidden_service_directory_creation_result is changed
+  when: onion_directory_creation_result is changed
 
-- name: wait for hidden service
+- name: wait for onion
   wait_for:
     path: "/var/lib/tor/{{ item.key }}/hostname"
-  with_dict: "{{ hidden_service_services }}"
-  when: item.value.hidden_service_state|default('present') != "absent"
+  with_dict: "{{ onion_services }}"
+  when: item.value.onion_state|default('present') != "absent"
 
-- name: read hidden service url
+- name: read onion url
   command: cat "/var/lib/tor/{{ item.key }}/hostname"
-  register: hidden_service_hostname_results
+  register: onion_hostname_results
   changed_when: false
-  with_dict: "{{ hidden_service_services }}"
-  when: not item.value.hidden_service_hostname|default(false) and item.value.hidden_service_state|default('present') != "absent"
+  with_dict: "{{ onion_services }}"
+  when: not item.value.onion_hostname|default(false) and item.value.onion_state|default('present') != "absent"
 
-- name: display hidden service url
+- name: display onion url
   debug:
     msg: >-
       {{ lookup('template', role_path+'/templates/display_hostnames.j2') }}
 
-# dirty hack to stop tor, when server is not the current hidden service,
+# dirty hack to stop tor, when server is not the current onion,
 # restart handler above , would start tor with
 # same url and private key on two hosts
 - name: stop tor, (two servers are up, only one should act as HS)
@@ -134,7 +133,7 @@
     enabled: no
     state: stopped
   notify: stop tor
-  when: not hidden_service_active
+  when: not onion_active
 
 - include: monit.yml
-  when: hidden_service_monit_enabled
+  when: onion_monit_enabled
