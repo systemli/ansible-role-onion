@@ -14,7 +14,7 @@ galaxy_info:
       versions:
         - all
   galaxy_tags:
-    - hidden-service
+    - hidden_service
     - networking
     - system
     - tor
