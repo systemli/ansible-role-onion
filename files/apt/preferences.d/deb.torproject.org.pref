@@ -1,0 +1,8 @@
+# Packages with pin priority = 100
+# causes a version to be installed unless there is a version available
+# belonging to some other distribution or the installed version is more
+# recent
+
+Package: *
+Pin: origin "deb.torproject.org"
+Pin-Priority: 100
