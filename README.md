@@ -14,7 +14,7 @@ Be careful: Using the default 127.0.0.1 as Onion Service IP-address could possib
 
 Supports [Next Gen Onion Services](https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service) only if tor version >= [0.3.2.1](https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler)!
 
-Testing with [Molecule](http://molecule.readthedocs.io/).
+Tested with Molecule, Docker, Vagrant and TravisCI.
 
 Role Variables
 --------------
@@ -148,12 +148,19 @@ onion_hid_serv_auth:
 Testing & Development
 ---------------------
 
+Tests
+-----
+
 For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
 
+Run local tests with:
+
 ```
-vagrant up stretch
-# other available releases are trusty, precise, and wheezy
+molecule test -s vagrant
 ```
+
+Requires Molecule, Vagrant and `python-vagrant` to be installed.For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
+
 
 License
 -------
