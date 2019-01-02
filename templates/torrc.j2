@@ -60,7 +60,7 @@
 #HashedControlPassword 16:872860B76453A77D60CA2BB8C1A7042072093276A3D701AD684053EC4C
 #CookieAuthentication 1
 
-{% for key, value in onions_configuration.iteritems() %}
+{% for key, value in onions_configuration.items() %}
 {{ key }} {{ value }}
 {% endfor %}
 
@@ -77,7 +77,7 @@ HidServAuth {{ client }}
 ## HiddenServicePort x y:z says to redirect requests on port x to the
 ## address y:z.
 
-{% for servicename, hsproperties in onion_services.iteritems() %}
+{% for servicename, hsproperties in onion_services.items() %}
 {% if hsproperties['onion_state']|default('present') != 'absent' %}
 HiddenServiceDir /var/lib/tor/{{ servicename }}/
 {% if hsproperties['onion_version']|default(2) == 3 and tor_version.stdout|version_compare('3.2.1', '>=', strict=True) %}
