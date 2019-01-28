@@ -12,37 +12,40 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.cpus = 1
   end
 
-  # Ubuntu Precise (12.04 LTS)
-  config.vm.define "precise" do |precise|
-    precise.vm.hostname = "precise"
-    precise.vm.box = "ubuntu/precise64"
+  # Ubuntu Xenial (16.04 LTS)
+  config.vm.define "xenial" do |xenial|
+    xenial.vm.hostname = "xenial64"
+    xenial.vm.box = "ubuntu/xenial64"
 
     # Ansible.
-    precise.vm.provision "ansible" do |ansible|
+    xenial.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
       ansible.playbook = "vagrant.yml"
       ansible.become = true
     end
   end
 
-  # Ubuntu Trusty (14.04 LTS)
-  config.vm.define "trusty" do |trusty|
-    trusty.vm.hostname = "trusty"
-    trusty.vm.box = "ubuntu/trusty64"
+  # Ubuntu Bionic (18.04 LTS)
+  config.vm.define "bionic" do |bionic|
+    bionic.vm.hostname = "bionic64"
+    bionic.vm.box = "ubuntu/bionic64"
 
     # Ansible.
-    trusty.vm.provision "ansible" do |ansible|
+    bionic.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
       ansible.playbook = "vagrant.yml"
       ansible.become = true
     end
   end
 
   # Debian Wheezy
-  config.vm.define "wheezy" do |wheezy|
-    wheezy.vm.hostname = "wheezy"
-    wheezy.vm.box = "debian/wheezy64"
+  config.vm.define "jessie" do |jessie|
+    jessie.vm.hostname = "jessie64"
+    jessie.vm.box = "debian/jessie64"
 
     # Ansible.
-    wheezy.vm.provision "ansible" do |ansible|
+    jessie.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
       ansible.playbook = "vagrant.yml"
       ansible.become = true
     end
@@ -50,11 +53,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Debian stretch
   config.vm.define "stretch", primary: true do |stretch|
-    stretch.vm.hostname = "stretch"
+    stretch.vm.hostname = "stretch64"
     stretch.vm.box = "debian/stretch64"
 
     # Ansible.
     stretch.vm.provision "ansible" do |ansible|
+      ansible.compatibility_mode = "2.0"
       ansible.playbook = "vagrant.yml"
       ansible.become = true
     end
