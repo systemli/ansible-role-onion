@@ -1,0 +1,8 @@
+---
+
+- hosts: xenial64, bionic64
+  gather_facts: no
+  become: True
+  pre_tasks:
+    - name: 'install python2'
+      raw: sudo apt-get -y install python

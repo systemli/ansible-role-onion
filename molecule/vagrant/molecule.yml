@@ -14,14 +14,14 @@ platforms:
     box: debian/jessie64
     memory: 512
     cpus: 2
-#  - name: xenial64
-#    box: ubuntu/xenial64
-#    memory: 512
-#    cpus: 2
-#  - name: bionic64
-#    box: ubuntu/xenial64
-#    memory: 512
-#    cpus: 2
+  - name: xenial64
+    box: ubuntu/xenial64
+    memory: 512
+    cpus: 2
+  - name: bionic64
+    box: ubuntu/xenial64
+    memory: 512
+    cpus: 2
 provisioner:
   name: ansible
   become: true
