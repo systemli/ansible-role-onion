@@ -37,7 +37,7 @@
 #   if the tor version does not support it
 #
 - name: register version of tor
-  shell: "tor --version | cut -d' ' -f3 | cut -d. -f2-"
+  shell: "tor --version | cut -d' ' -f3 | cut -d. -f2- | sed 's/\\.$//'"
   register: tor_version
   check_mode: no
   changed_when: false
