@@ -113,7 +113,7 @@
 - name: reload tor if service was created
   service:
     name: tor
-    state: restarted
+    state: reloaded
   when: onion_directory_creation_result is changed
 
 - name: wait for onion
