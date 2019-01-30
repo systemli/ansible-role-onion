@@ -5,7 +5,7 @@
   apt:
     pkg: gnupg2
     state: present
-  when: (ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 9) or 
+  when: (ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 9) or
         (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 18)
 
 - name: Ensure apt_preferences include file for deb.torproject.org is present
@@ -21,6 +21,7 @@
   apt_key:
     data: "{{ lookup('file', 'torproject.asc') }}"
     state: "{{ onion_tor_apt_state }}"
+    id: "{{ onion_tor_apt_key_id }}" 
 
 - name: ensure the required repository is present
   apt_repository:
