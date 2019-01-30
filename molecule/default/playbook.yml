@@ -5,4 +5,12 @@
   roles:
     - role: ansible-role-onion
   vars:
+    onion_services:
+      hsv2:
+        onion_ports:
+          - [22, 22]
+        onion_version: 2
+      hsv3:
+        onion_ports:
+          - [22, 22]
     __testing: true

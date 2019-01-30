@@ -13,6 +13,8 @@ Hint: It may take up to one minute, until the service is announced in the tor ne
 Be careful: Using the default 127.0.0.1 as Onion Service IP-address could possibly leak meta data: https://help.riseup.net/en/security/network-security/tor/onionservices-best-practices#be-careful-of-localhost-bypasses
 
 Supports [Next Gen Onion Services](https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service) only if tor version >= [0.3.2.1](https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler)!
+Since Tor 0.3.5.0 HiddenServices v3 is the default. You have to set `onion_version: 2` if you want to use former onion services.
+
 
 Tested with Molecule, Docker, Vagrant and TravisCI.
 

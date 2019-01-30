@@ -11,7 +11,11 @@
 - hosts: all
   vars:
     onion_services:
-      ssh:
+      hsv2:
+        onion_ports:
+          - [22, 22]
+        onion_version: 2
+      hsv3:
         onion_ports:
           - [22, 22]
   roles:
