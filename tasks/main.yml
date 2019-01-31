@@ -67,8 +67,7 @@
     owner: root
     group: root
     mode: 0644
-  notify:
-    - restart tor
+  notify: reload tor
 
 - name: ensure hostname file are present
   template:
@@ -82,7 +81,7 @@
   when: item.value.onion_hostname is defined and
         item.value.onion_hostname and
         item.value.onion_state|default('present') == 'present'
-  notify: restart tor
+  notify: reload tor
 
 - name: ensure private_key file are present
   template:
@@ -96,7 +95,7 @@
   when: item.value.onion_private_key is defined and
         item.value.onion_private_key and
         item.value.onion_state|default('present') == 'present'
-  notify: restart tor
+  notify: reload tor
 
 - name: ensure onion directory is absent
   file:
