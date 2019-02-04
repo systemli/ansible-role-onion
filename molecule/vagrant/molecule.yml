@@ -1,6 +1,6 @@
 ---
 scenario:
-  name: vagrant
+  name: default
 driver:
   name: vagrant
   provider:
@@ -9,19 +9,19 @@ platforms:
   - name: stretch64
     box: debian/stretch64
     memory: 512
-    cpus: 2
+    cpus: 1
   - name: jessie64
     box: debian/jessie64
     memory: 512
-    cpus: 2
+    cpus: 1
   - name: xenial64
     box: ubuntu/xenial64
     memory: 512
-    cpus: 2
+    cpus: 1
   - name: bionic64
     box: ubuntu/xenial64
     memory: 512
-    cpus: 2
+    cpus: 1
 provisioner:
   name: ansible
   become: true
@@ -29,7 +29,7 @@ provisioner:
     name: ansible-lint
     enabled: False
   playbooks:
-    converge: ../default/playbook.yml
+    converge: playbook.yml
 lint:
   name: yamllint
   enabled: True

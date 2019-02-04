@@ -21,7 +21,7 @@
   apt_key:
     data: "{{ lookup('file', 'torproject.asc') }}"
     state: "{{ onion_tor_apt_state }}"
-    id: "{{ onion_tor_apt_key_id }}" 
+    id: "{{ onion_tor_apt_key_id }}"
 
 - name: ensure the required repository is present
   apt_repository:
