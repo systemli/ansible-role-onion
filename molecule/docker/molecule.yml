@@ -1,4 +1,6 @@
 ---
+scenario:
+  name: docker
 dependency:
   name: galaxy
 driver:
@@ -21,8 +23,8 @@ provisioner:
   lint:
     name: ansible-lint
     enabled: false
-scenario:
-  name: default
+  playbooks:
+    converge: ../default/playbook.yml
 verifier:
   name: testinfra
   lint:

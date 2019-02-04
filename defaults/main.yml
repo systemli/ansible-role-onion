@@ -2,7 +2,7 @@
 # defaults file for onion
 onion_active: True
 onion_ipaddr: 127.0.0.1
-onion_tor_apt_state: present 
+onion_tor_apt_state: present
 onion_tor_apt_key_id: A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
 onion_apt_packages: ['deb.torproject.org-keyring']
 onion_services:

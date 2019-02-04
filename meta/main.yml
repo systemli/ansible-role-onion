@@ -5,14 +5,16 @@ galaxy_info:
   description: Install and configure Tor Onion Services
   company: systemli.org
   license: GPLv3
-  min_ansible_version: 1.9.6
+  min_ansible_version: 2.4
   platforms:
     - name: Ubuntu
       versions:
-        - all
+        - xenial
+        - bionic
     - name: Debian
       versions:
-        - all
+        - stretch
+        - buster
   galaxy_tags:
     - networking
     - system
