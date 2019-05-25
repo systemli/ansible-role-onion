@@ -1,0 +1,15 @@
+---
+
+package:
+  tor:
+    installed: true
+service:
+  tor:
+    enabled: true
+    running: true
+process:
+  tor:
+    running: true
+file:
+  /var/lib/tor/hsv3:
+    exists: true
