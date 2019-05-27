@@ -1,0 +1,5 @@
+---
+- name: Copy goss tests
+  template:
+    src: test_onion.yml.j2
+    dest: /etc/goss.d/test_onion.yml

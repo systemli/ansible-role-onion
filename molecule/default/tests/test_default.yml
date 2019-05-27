@@ -1,5 +1,4 @@
 ---
-
 package:
   tor:
     installed: true
@@ -11,5 +10,11 @@ process:
   tor:
     running: true
 file:
-  /var/lib/tor/hsv3:
+  /var/lib/tor/hsv2/hostname:
+    exists: true
+  /var/lib/tor/hsv2/privatekey:
+    exists: true
+  /var/lib/tor/hsv3/hostname:
+    exists: true
+  /var/lib/tor/hsv3/privatekey:
     exists: true
