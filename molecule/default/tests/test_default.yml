@@ -12,9 +12,7 @@ process:
 file:
   /var/lib/tor/hsv2/hostname:
     exists: true
-  /var/lib/tor/hsv2/privatekey:
+  /var/lib/tor/hsv2/private_key:
     exists: true
   /var/lib/tor/hsv3/hostname:
-    exists: true
-  /var/lib/tor/hsv3/privatekey:
     exists: true

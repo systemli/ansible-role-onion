@@ -18,6 +18,4 @@ file:
     contains:
       - {{ value.onion_hostname }}
 {% endif %}
-  /var/lib/tor/{{ key }}/private_key:
-    exists: true
 {% endfor %}
