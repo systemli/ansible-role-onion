@@ -1,8 +1,9 @@
 ---
-
-- hosts: xenial64, bionic64
-  gather_facts: no
-  become: True
-  pre_tasks:
-    - name: 'install python2'
-      raw: sudo apt-get -y install python
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install python for Ansible
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      become: true
+      changed_when: false
