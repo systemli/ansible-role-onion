@@ -1,0 +1,23 @@
+---
+
+package:
+  tor:
+    installed: true
+service:
+  tor:
+    enabled: true
+    running: true
+process:
+  tor:
+    running: true
+file:
+{% for key, value in onion_services.iteritems() %}
+  /var/lib/tor/{{ key }}/hostname:
+    exists: true
+{% if value.onion_hostname %}
+    contains:
+      - {{ value.onion_hostname }}
+{% endif %}
+  /var/lib/tor/{{ key }}/private_key:
+    exists: true
+{% endfor %}

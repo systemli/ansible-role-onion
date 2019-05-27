@@ -18,14 +18,13 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
-  options:
-    skip-tags: molecule_test_skip
   lint:
     name: ansible-lint
     enabled: false
   playbooks:
     converge: ../default/playbook.yml
+    verify: ../default/verify.yml
 verifier:
-  name: testinfra
+  name: goss
   lint:
-    name: flake8
+    name: yamllint

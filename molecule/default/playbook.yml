@@ -13,4 +13,3 @@
       hsv3:
         onion_ports:
           - [22, 22]
-    __testing: true

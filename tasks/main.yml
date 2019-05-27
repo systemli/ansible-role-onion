@@ -146,3 +146,11 @@
 
 - include: monit.yml
   when: onion_monit_enabled
+
+- name: Copy goss tests
+  template:
+    src: test_onion.yml.j2
+    dest: /etc/goss.d/test_onion.yml
+  when: goss_enabled|d()
+  tags:
+    - goss

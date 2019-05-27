@@ -15,9 +15,6 @@ Be careful: Using the default 127.0.0.1 as Onion Service IP-address could possib
 Supports [Next Gen Onion Services](https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service) only if tor version >= [0.3.2.1](https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler)!
 Since Tor 0.3.5.0 HiddenServices v3 is the default. You have to set `onion_version: 2` if you want to use former onion services.
 
-
-Tested with Molecule, Docker, Vagrant and TravisCI.
-
 Role Variables
 --------------
 
@@ -147,22 +144,16 @@ onion_hid_serv_auth:
   - "r7w3xdf3r5smxokv.onion p0xMVci7ffeQFA4IWkcBxR # client: admin"
 ```
 
-Testing & Development
----------------------
-
-Tests
------
-
-For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
+Testing
+-------
 
 Run local tests with:
-
 ```
 molecule test 
 ```
+Requires Molecule, Vagrant and `python-vagrant` to be installed.
 
-Requires Molecule, Vagrant and `python-vagrant` to be installed.For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
-
+This role is uses continous testing with Molecule, Goss and Travis CI.
 
 License
 -------
