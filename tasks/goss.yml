@@ -1,0 +1,15 @@
+---
+
+- name: Check is goss test directory exists
+  stat:
+    path: "{{ goss_test_directory }}"
+  when: goss_test_directory is defined
+  register: dir
+
+- name: Copy goss tests
+  template:
+    src: "test_{{ item }}.yml.j2"
+    dest: "{{ goss_test_directory }}/test_{{ item }}.yml"
+  when: dir.stat is defined and dir.stat.exists and dir.stat.isdir
+  with_items:
+    - onion
