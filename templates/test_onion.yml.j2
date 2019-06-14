@@ -11,7 +11,7 @@ process:
   tor:
     running: true
 file:
-{% for key, value in onion_services.iteritems() %}
+{% for key, value in onion_services.items() %}
   /var/lib/tor/{{ key }}/hostname:
     exists: true
 {% if value.onion_hostname %}
