@@ -77,7 +77,7 @@ HidServAuth {{ client }}
 ## HiddenServicePort x y:z says to redirect requests on port x to the
 ## address y:z.
 
-{% for servicename, hsproperties in onion_services.items() %}
+{% for servicename, hsproperties in onion_services|dictsort %}
 {% if hsproperties['onion_state']|default('present') != 'absent' %}
 HiddenServiceDir /var/lib/tor/{{ servicename }}/
 {% if hsproperties['onion_version']|default(2) == 3 and tor_version.stdout is version_compare('3.2.1', '>=', strict=True) and tor_version.stdout is version_compare('3.2.5', '<', strict=True) %}
