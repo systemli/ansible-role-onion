@@ -83,7 +83,7 @@
         item.value.onion_state|default('present') == 'present'
   notify: reload tor
 
-- name: ensure private_key file are present
+- name: ensure private_key file are present (for onion v2)
   template:
     src: private_key
     dest: "/var/lib/tor/{{ item.key }}/private_key"
@@ -94,6 +94,23 @@
   with_dict: "{{ onion_services }}"
   when: item.value.onion_private_key is defined and
         item.value.onion_private_key and
+        item.value.onion_version|default(2) == 2 and
+        item.value.onion_state|default('present') == 'present'
+  notify: reload tor
+
+- name: copy encoded private_key (only for onion v3)
+  template:
+    src: private_key_encoded
+    dest: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+    owner: debian-tor
+    group: debian-tor
+    mode: 0600
+    backup: yes
+  with_dict: "{{ onion_services }}"
+  when: item.value.onion_private_key_b64encoded is defined and
+        item.value.onion_private_key_b64encoded and
+        item.value.onion_version is defined and
+        item.value.onion_version == 3 and
         item.value.onion_state|default('present') == 'present'
   notify: reload tor
 
