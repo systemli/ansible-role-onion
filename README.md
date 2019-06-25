@@ -108,10 +108,10 @@ onion_services:
      onion_hostname:
      onion_version: 3
      onion_ports:
-        - [25, 25] 
+        - [25, 25]
         - [587,587]
-     onion_private_key:
-
+     onion_private_key_b64encoded: |
+      here goes the file hs_ed25519_secret_key encoded in base 64
 
 #
 # Example for torrc with special onion configurations
@@ -149,7 +149,7 @@ Testing
 
 Run local tests with:
 ```
-molecule test 
+molecule test
 ```
 Requires Molecule, Vagrant and `python-vagrant` to be installed.
 
