@@ -96,7 +96,7 @@
   when:
     - item.value.onion_private_key is defined
     - item.value.onion_private_key
-    - item.value.onion_version|default(2) == 2
+    - item.value.onion_version|default(3) == 2
     - item.value.onion_state|default('present') == 'present'
   notify: reload tor
 
