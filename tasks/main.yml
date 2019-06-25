@@ -78,9 +78,10 @@
     mode: 0600
     backup: yes
   with_dict: "{{ onion_services }}"
-  when: item.value.onion_hostname is defined and
-        item.value.onion_hostname and
-        item.value.onion_state|default('present') == 'present'
+  when:
+    - item.value.onion_hostname is defined
+    - item.value.onion_hostname
+    - item.value.onion_state|default('present') == 'present'
   notify: reload tor
 
 - name: ensure private_key file are present (for onion v2)
@@ -92,10 +93,11 @@
     mode: 0600
     backup: yes
   with_dict: "{{ onion_services }}"
-  when: item.value.onion_private_key is defined and
-        item.value.onion_private_key and
-        item.value.onion_version|default(2) == 2 and
-        item.value.onion_state|default('present') == 'present'
+  when:
+    - item.value.onion_private_key is defined
+    - item.value.onion_private_key
+    - item.value.onion_version|default(2) == 2
+    - item.value.onion_state|default('present') == 'present'
   notify: reload tor
 
 - name: copy encoded private_key (only for onion v3)
@@ -107,11 +109,12 @@
     mode: 0600
     backup: yes
   with_dict: "{{ onion_services }}"
-  when: item.value.onion_private_key_b64encoded is defined and
-        item.value.onion_private_key_b64encoded and
-        item.value.onion_version is defined and
-        item.value.onion_version == 3 and
-        item.value.onion_state|default('present') == 'present'
+  when:
+    - item.value.onion_private_key_b64encoded is defined
+    - item.value.onion_private_key_b64encoded
+    - item.value.onion_version is defined
+    - item.value.onion_version == 3
+    - item.value.onion_state|default('present') == 'present'
   notify: reload tor
 
 - name: ensure onion directory is absent
@@ -143,7 +146,9 @@
   register: onion_hostname_results
   changed_when: false
   with_dict: "{{ onion_services }}"
-  when: not item.value.onion_hostname|default(false) and item.value.onion_state|default('present') != "absent"
+  when:
+    - not item.value.onion_hostname|default(false)
+    - item.value.onion_state|default('present') != "absent"
 
 - name: display onion url
   debug:
