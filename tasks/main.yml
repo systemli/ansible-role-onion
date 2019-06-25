@@ -71,7 +71,7 @@
 
 - name: ensure hostname file are present
   template:
-    src: hostname
+    src: hostname.j2
     dest: "/var/lib/tor/{{ item.key }}/hostname"
     owner: debian-tor
     group: debian-tor
@@ -85,7 +85,7 @@
 
 - name: ensure private_key file are present (for onion v2)
   template:
-    src: private_key
+    src: private_key.j2
     dest: "/var/lib/tor/{{ item.key }}/private_key"
     owner: debian-tor
     group: debian-tor
@@ -100,7 +100,7 @@
 
 - name: copy encoded private_key (only for onion v3)
   template:
-    src: private_key_encoded
+    src: private_key_encoded.j2
     dest: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
     owner: debian-tor
     group: debian-tor
