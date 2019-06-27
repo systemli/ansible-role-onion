@@ -25,7 +25,7 @@
 
 - name: ensure the required repository is present
   apt_repository:
-    repo: "deb http://deb.torproject.org/torproject.org {{ ansible_distribution_release }} main"
+    repo: "deb {{ 'https' if ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 10 else 'http' }}://deb.torproject.org/torproject.org {{ ansible_distribution_release }} main"
 
 - name: ensure tor is installed
   apt:
