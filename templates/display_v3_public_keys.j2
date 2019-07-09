@@ -1,0 +1,5 @@
+{% for key in onion_v3_public_key_results.results %}
+{% if key.stdout is defined %}PublicKey (/var/lib/tor/{{ key.item.key }}/hs_ed25519_public_key)[Base64]:
+{{ key.stdout }}
+{% endif %}
+{% endfor %}

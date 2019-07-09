@@ -68,17 +68,20 @@ onion_ipaddr: 192.168.3.12
 onion_services:
   ssh:
      onion_hostname:
+     onion_version: 2
      onion_ports:
         - [22, 22]
      onion_private_key:
   mail:
      onion_hostname:
+     onion_version: 2
      onion_ports:
         - [25, 25] #[redirected_from, redirected_to]
         - [587,587]
      onion_private_key:
   examplewithhostname:
      onion_hostname: onionurl.onion
+     onion_version: 2
      onion_ports:
         - [25, 25]
         - [587,587]
@@ -90,6 +93,7 @@ onion_services:
       -----END RSA PRIVATE KEY-----
   absentonion:
      onion_state: absent
+     onion_version: 2
      onion_hostname: onionurl.onion
      onion_ports:
         - [25, 25]
@@ -105,13 +109,13 @@ onion_services:
   # https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service
   #
   nextgenonion:
-     onion_hostname:
-     onion_version: 3
+     onion_hostname: onionv3url.onion
      onion_ports:
         - [25, 25]
         - [587,587]
-     onion_private_key_b64encoded: |
-      here goes the file hs_ed25519_secret_key encoded in base 64
+     onion_public_key_b64encoded: "\nPT0gZWQyNTUxOaYxLXB1YmxpYzogdHlwZTAgPT0AAABADSX6gVbfuClP6aBXz8V00oMw5Sovn0ZU\nftKei9UWmw==\n"
+     onion_secret_key_b64encoded: "\nPT0gZWQyNTUxOaYxLXNlY3JldDogdHlwZTAgPT0AAAAYzbVMulElZeorlRoSKWG4VVVwWQN0lHac\nhpR5jLcqb2iuHQu7K9yrdRUrSUWW42gFUvl7lCDQPV7aGWQcf9TI\n"
+    
 
 #
 # Example for torrc with special onion configurations

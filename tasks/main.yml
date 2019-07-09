@@ -100,22 +100,55 @@
     - item.value.onion_state|default('present') == 'present'
   notify: reload tor
 
-- name: copy encoded private_key (only for onion v3)
-  template:
-    src: private_key_encoded.j2
-    dest: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+- name: copy encoded public_key (only for onion v3)
+  shell: "echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
+  args:
+    creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
+  with_dict: "{{ onion_services }}"
+  when:
+    - item.value.onion_public_key_b64encoded is defined
+    - item.value.onion_public_key_b64encoded
+    - item.value.onion_version|default(3) == 3
+    - item.value.onion_state|default('present') == 'present'
+  notify: reload tor
+
+- name: ensure file permissions are correct
+  file:
+    path: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
     owner: debian-tor
     group: debian-tor
     mode: 0600
-    backup: yes
   with_dict: "{{ onion_services }}"
   when:
-    - item.value.onion_private_key_b64encoded is defined
-    - item.value.onion_private_key_b64encoded
-    - item.value.onion_version is defined
-    - item.value.onion_version == 3
+    - item.value.onion_public_key_b64encoded is defined
+    - item.value.onion_public_key_b64encoded
+    - item.value.onion_version|default(3) == 3
+    - item.value.onion_state|default('present') == 'present'
+
+- name: copy encoded secret_key (only for onion v3)
+  shell: "echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+  args:
+    creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+  with_dict: "{{ onion_services }}"
+  when:
+    - item.value.onion_secret_key_b64encoded is defined
+    - item.value.onion_secret_key_b64encoded
+    - item.value.onion_version|default(3) == 3
     - item.value.onion_state|default('present') == 'present'
   notify: reload tor
+
+- name: ensure file permissions are correct
+  file:
+    path: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+    owner: debian-tor
+    group: debian-tor
+    mode: 0600
+  with_dict: "{{ onion_services }}"
+  when:
+    - item.value.onion_secret_key_b64encoded is defined
+    - item.value.onion_secret_key_b64encoded
+    - item.value.onion_version|default(3) == 3
+    - item.value.onion_state|default('present') == 'present'
 
 - name: ensure onion directory is absent
   file:
@@ -127,8 +160,8 @@
   with_dict: "{{ onion_services }}"
   when: item.value.onion_state|default('present') == "absent"
 
-  # The hostname file won't be created until the tor service
-  # is reloaded, so bounce it before the `wait_for` task.
+# The hostname file won't be created until the tor service
+# is reloaded, so bounce it before the `wait_for` task.
 - name: reload tor if service was created
   service:
     name: tor
@@ -150,12 +183,42 @@
     - not item.value.onion_hostname|default(false)
     - item.value.onion_state|default('present') != "absent"
 
+- name: read onion v3 secret key
+  command: base64 "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+  register: onion_v3_secret_key_results
+  changed_when: false
+  with_dict: "{{ onion_services }}"
+  when:
+    - not item.value.onion_secret_key_b64encoded|default(false)
+    - item.value.onion_state|default('present') != "absent"
+    - item.value.onion_version|default(3) == 3
+
+- name: read onion v3 public key
+  command: base64 "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
+  register: onion_v3_public_key_results
+  changed_when: false
+  with_dict: "{{ onion_services }}"
+  when:
+    - not item.value.onion_public_key_b64encoded|default(false)
+    - item.value.onion_state|default('present') != "absent"
+    - item.value.onion_version|default(3) == 3
+
 - name: display onion url
   debug:
     msg: >-
       {{ lookup('template', role_path+'/templates/display_hostnames.j2') }}
 
-# dirty hack to stop tor, when server is not the current onion,
+- name: display public key for v3 host
+  debug:
+    msg: >-
+      {{ lookup('template', role_path+'/templates/display_v3_public_keys.j2') }}
+
+- name: display secret key for v3 host
+  debug:
+    msg: >-
+      {{ lookup('template', role_path+'/templates/display_v3_secret_keys.j2') }}
+
+# dirty hack to stop tor, when server is not the current onion server,
 # restart handler above , would start tor with
 # same url and private key on two hosts
 - name: stop tor, (two servers are up, only one should act as HS)

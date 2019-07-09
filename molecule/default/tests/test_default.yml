@@ -16,3 +16,7 @@ file:
     exists: true
   /var/lib/tor/hsv3/hostname:
     exists: true
+  /var/lib/tor/hsv3/hs_ed25519_public_key:
+    exists: true
+  /var/lib/tor/hsv3/hs_ed25519_secret_key:
+    exists: true
