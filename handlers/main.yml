@@ -1,9 +1,9 @@
 ---
 # handlers file for onion
-- name: reload tor
+- name: restart tor
   service:
     name: tor
-    state: reloaded
+    state: restarted
 
 - name: stop tor
   service:

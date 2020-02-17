@@ -67,7 +67,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: reload tor
+  notify: restart tor
 
 - name: ensure hostname file are present
   template:
@@ -82,7 +82,7 @@
     - item.value.onion_hostname is defined
     - item.value.onion_hostname
     - item.value.onion_state|default('present') == 'present'
-  notify: reload tor
+  notify: restart tor
 
 - name: ensure private_key file are present (for onion v2)
   template:
@@ -98,7 +98,7 @@
     - item.value.onion_private_key
     - item.value.onion_version|default(3) == 2
     - item.value.onion_state|default('present') == 'present'
-  notify: reload tor
+  notify: restart tor
 
 - name: copy encoded public_key (only for onion v3)
   shell: "echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
@@ -110,7 +110,7 @@
     - item.value.onion_public_key_b64encoded
     - item.value.onion_version|default(3) == 3
     - item.value.onion_state|default('present') == 'present'
-  notify: reload tor
+  notify: restart tor
 
 - name: ensure file permissions are correct
   file:
@@ -135,7 +135,7 @@
     - item.value.onion_secret_key_b64encoded
     - item.value.onion_version|default(3) == 3
     - item.value.onion_state|default('present') == 'present'
-  notify: reload tor
+  notify: restart tor
 
 - name: ensure file permissions are correct
   file:
@@ -162,7 +162,7 @@
 
 # The hostname file won't be created until the tor service
 # is reloaded, so bounce it before the `wait_for` task.
-- name: reload tor if service was created
+- name: restart tor if service was created
   service:
     name: tor
     state: reloaded
