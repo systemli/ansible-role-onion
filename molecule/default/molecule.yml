@@ -12,12 +12,9 @@ platforms:
     box: ubuntu/xenial64
   - name: bionic64
     box: ubuntu/bionic64
+lint: ansible-lint
 provisioner:
   name: ansible
   become: true
-  lint:
-    name: ansible-lint
 verifier:
   name: goss
-  lint:
-    name: yamllint
