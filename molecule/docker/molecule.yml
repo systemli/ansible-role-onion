@@ -11,7 +11,10 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
-#lint: ansible-lint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
 provisioner:
   name: ansible
   playbooks:

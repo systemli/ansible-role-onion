@@ -23,7 +23,8 @@
 
 - name: ensure the required repository is present
   apt_repository:
-    repo: "deb {{ 'https' if ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 10 else 'http' }}://deb.torproject.org/torproject.org {{ ansible_distribution_release }} main"
+    repo: "deb {{ 'https' if ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 10 else 'http' }}\
+://deb.torproject.org/torproject.org {{ ansible_distribution_release }} main"
 
 - name: ensure tor is installed
   apt:
@@ -99,7 +100,8 @@
   notify: restart tor
 
 - name: copy encoded public_key (only for onion v3)
-  shell: "echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
+  shell: "executable=/bin/bash set -o pipefail &&\
+echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
   args:
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
   with_dict: "{{ onion_services }}"
@@ -124,7 +126,8 @@
     - item.value.onion_state|default('present') == 'present'
 
 - name: copy encoded secret_key (only for onion v3)
-  shell: "echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+  shell: "executable=/bin/bash set -o pipefail &&\
+echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
   args:
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
   with_dict: "{{ onion_services }}"
