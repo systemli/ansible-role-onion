@@ -7,9 +7,6 @@ service:
   tor:
     enabled: true
     running: true
-process:
-  tor:
-    running: true
 file:
 {% for key, value in onion_services|dictsort %}
   /var/lib/tor/{{ key }}/hostname:
@@ -17,5 +14,11 @@ file:
 {% if value.onion_hostname %}
     contains:
       - {{ value.onion_hostname }}
+{% endif %}
+{% if value.onion_version is not defined or value.onion_version|int == 3 %}
+  /var/lib/tor/{{ key }}/hs_ed25519_public_key:
+    exists: true
+  /var/lib/tor/{{ key }}/hs_ed25519_secret_key:
+    exists: true
 {% endif %}
 {% endfor %}

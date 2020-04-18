@@ -1,4 +1,5 @@
 ---
+
 package:
   tor:
     installed: true
@@ -6,17 +7,10 @@ service:
   tor:
     enabled: true
     running: true
-process:
-  tor:
-    running: true
 file:
-  /var/lib/tor/hsv2/hostname:
+  /var/lib/tor/ssh/hostname:
     exists: true
-  /var/lib/tor/hsv2/private_key:
+  /var/lib/tor/ssh/hs_ed25519_public_key:
     exists: true
-  /var/lib/tor/hsv3/hostname:
-    exists: true
-  /var/lib/tor/hsv3/hs_ed25519_public_key:
-    exists: true
-  /var/lib/tor/hsv3/hs_ed25519_secret_key:
+  /var/lib/tor/ssh/hs_ed25519_secret_key:
     exists: true
