@@ -10,6 +10,9 @@
   template:
     src: "test_{{ item }}.yml.j2"
     dest: "{{ goss_test_directory }}/test_{{ item }}.yml"
+    owner: root
+    group: root
+    mode: 0644
   when: dir.stat is defined and dir.stat.exists and dir.stat.isdir
   with_items:
     - onion
