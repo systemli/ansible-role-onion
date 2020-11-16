@@ -1,9 +1,8 @@
 ansible-role-onion
 ===========================
 
-[![Build Status](https://travis-ci.com/systemli/ansible-role-onion.svg?branch=master)](https://travis-ci.com/systemli/ansible-role-onion)
+[![Build Status](https://github.com/systemli/ansible-role-onion/workflows/Molecule/badge.svg?branch=master)](https://github.com/systemli/ansible-role-onion/actions?query=workflow%3AMolecule)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-onion-blue.svg)](https://galaxy.ansible.com/systemli/onion/)
-
 
 Install and configure one or multiple Tor Onion Services (formerly known as Hidden Services).
 
@@ -149,16 +148,22 @@ onion_hid_serv_auth:
   - "r7w3xdf3r5smxokv.onion p0xMVci7ffeQFA4IWkcBxR # client: admin"
 ```
 
-Testing
--------
+
+Testing & Development
+---------------------
+
+Tests
+-----
+
+For developing and testing the role we use Github Actions, Molecule, and Vagrant. On the local environment you can easily test the role with
 
 Run local tests with:
-```
-molecule test
-```
-Requires Molecule, Vagrant and `python-vagrant` to be installed.
 
-This role is uses continous testing with Molecule, Goss and Travis CI.
+```
+molecule test 
+```
+
+Requires Molecule, Vagrant and `python-vagrant` to be installed.For developing and testing the role we use Travis CI, Molecule and Vagrant. On the local environment you can easily test the role with
 
 License
 -------
