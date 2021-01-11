@@ -8,8 +8,6 @@ service:
     enabled: true
     running: true
 file:
-  /var/lib/tor/ssh/hostname:
-    exists: true
   /var/lib/tor/ssh/hs_ed25519_public_key:
     exists: true
   /var/lib/tor/ssh/hs_ed25519_secret_key:
