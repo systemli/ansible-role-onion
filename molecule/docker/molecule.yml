@@ -22,3 +22,4 @@ provisioner:
     verify: ../default/verify.yml
 verifier:
   name: goss
+  directory: ../default/tests/
