@@ -4,14 +4,16 @@ driver:
   provider:
     name: virtualbox
 platforms:
-  - name: stretch64
-    box: debian/stretch64
-  - name: jessie64
-    box: debian/jessie64
-  - name: xenial64
-    box: ubuntu/xenial64
-  - name: bionic64
-    box: ubuntu/bionic64
+  - name: buster64
+    box: debian/buster64
+#  - name: stretch64
+#    box: debian/stretch64
+#  - name: jessie64
+#    box: debian/jessie64
+#  - name: xenial64
+#    box: ubuntu/xenial64
+#  - name: bionic64
+#    box: ubuntu/bionic64
 lint: |
   set -e
   yamllint .
