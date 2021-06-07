@@ -4,16 +4,3 @@
   become: True
   roles:
     - role: ansible-role-onion
-  vars:
-    onion_services:
-      hsv2:
-        onion_hostname:
-        onion_ports:
-          - [22, 22]
-        onion_version: 2
-      hsv3:
-        onion_hostname:
-        onion_ports:
-          - [22, 22]
-        onion_public_key_b64encoded:
-        onion_secret_key_b64encoded:
