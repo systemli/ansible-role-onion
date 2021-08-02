@@ -1,6 +1,4 @@
 ---
-# tasks file for onion
-
 - name: Ensure gpg is present
   apt:
     pkg: gnupg
@@ -30,18 +28,6 @@
   apt:
     pkg: tor
     state: "{{ onion_tor_apt_state }}"
-
-#
-# - removed trailing 0: 0.3.2.1 --> 3.2.1
-# - jinja2 filter compare version is allowing max. two dots (https://pizjix.com/version-numbers-in-ansible-code/)
-# - comparision is needed as safety, to not deploy onions in version 3,
-#   if the tor version does not support it
-#
-- name: register version of tor
-  shell: "executable=/bin/bash set -o pipefail && tor --version | cut -d' ' -f3 | cut -d. -f2- | sed 's/\\.$//'"
-  register: tor_version
-  check_mode: no
-  changed_when: false
 
 - name: install extra tor packages
   apt:
@@ -83,22 +69,6 @@
     - item.value.onion_state|default('present') == 'present'
   notify: restart tor
 
-- name: ensure private_key file are present (for onion v2)
-  template:
-    src: private_key.j2
-    dest: "/var/lib/tor/{{ item.key }}/private_key"
-    owner: debian-tor
-    group: debian-tor
-    mode: 0600
-    backup: yes
-  with_dict: "{{ onion_services }}"
-  when:
-    - item.value.onion_private_key is defined
-    - item.value.onion_private_key
-    - item.value.onion_version|default(3) == 2
-    - item.value.onion_state|default('present') == 'present'
-  notify: restart tor
-
 - name: copy encoded public_key (only for onion v3)
   shell: "executable=/bin/bash set -o pipefail &&\
 echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
@@ -108,7 +78,6 @@ echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   when:
     - item.value.onion_public_key_b64encoded is defined
     - item.value.onion_public_key_b64encoded
-    - item.value.onion_version|default(3) == 3
     - item.value.onion_state|default('present') == 'present'
   notify: restart tor
 
@@ -122,7 +91,6 @@ echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   when:
     - item.value.onion_public_key_b64encoded is defined
     - item.value.onion_public_key_b64encoded
-    - item.value.onion_version|default(3) == 3
     - item.value.onion_state|default('present') == 'present'
 
 - name: copy encoded secret_key (only for onion v3)
@@ -134,7 +102,6 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   when:
     - item.value.onion_secret_key_b64encoded is defined
     - item.value.onion_secret_key_b64encoded
-    - item.value.onion_version|default(3) == 3
     - item.value.onion_state|default('present') == 'present'
   notify: restart tor
 
@@ -148,25 +115,22 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   when:
     - item.value.onion_secret_key_b64encoded is defined
     - item.value.onion_secret_key_b64encoded
-    - item.value.onion_version|default(3) == 3
     - item.value.onion_state|default('present') == 'present'
 
 - name: ensure onion directory is absent
   file:
     path: "/var/lib/tor/{{ item.key }}/"
-    owner: debian-tor
-    group: debian-tor
     mode: 0700
     state: absent
   with_dict: "{{ onion_services }}"
   when: item.value.onion_state|default('present') == "absent"
 
 # The hostname file won't be created until the tor service
-# is reloaded, so bounce it before the `wait_for` task.
+# is restarted, so bounce it before the `wait_for` task.
 - name: restart tor if service was created
   service:
     name: tor
-    state: reloaded
+    state: restarted
   when: onion_directory_creation_result is changed
 
 - name: wait for onion
@@ -192,7 +156,6 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   when:
     - not item.value.onion_secret_key_b64encoded|default(false)
     - item.value.onion_state|default('present') != "absent"
-    - item.value.onion_version|default(3) == 3
 
 - name: read onion v3 public key
   command: base64 "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
@@ -202,7 +165,6 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   when:
     - not item.value.onion_public_key_b64encoded|default(false)
     - item.value.onion_state|default('present') != "absent"
-    - item.value.onion_version|default(3) == 3
 
 - name: display onion url
   debug:
