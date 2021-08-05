@@ -79,12 +79,7 @@ HidServAuth {{ client }}
 {% for servicename, hsproperties in onion_services|dictsort %}
 {% if hsproperties['onion_state']|default('present') != 'absent' %}
 HiddenServiceDir /var/lib/tor/{{ servicename }}/
-{% if hsproperties['onion_version']|default(2) == 3 and tor_version.stdout is version_compare('3.2.1', '>=', strict=True) and tor_version.stdout is version_compare('3.2.5', '<', strict=True) %}
 HiddenServiceVersion 3
-{% endif %}
-{% if hsproperties['onion_version']|default(3) == 2 and tor_version.stdout is version_compare('3.2.5', '>=', strict=True) %}
-HiddenServiceVersion 2
-{% endif %}
 {% for port in hsproperties['onion_ports'] %}
 HiddenServicePort {{ port.0 }} {{ onion_ipaddr }}:{{ port.1}}
 {% endfor %}

@@ -12,8 +12,10 @@ Hint: It may take up to one minute, until the service is announced in the tor ne
 
 Be careful: Using the default 127.0.0.1 as Onion Service IP-address could possibly leak meta data: https://help.riseup.net/en/security/network-security/tor/onionservices-best-practices#be-careful-of-localhost-bypasses
 
-Supports [Next Gen Onion Services](https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service) only if tor version >= [0.3.2.1](https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler)!
-Since Tor 0.3.5.0 HiddenServices v3 is the default. You have to set `onion_version: 2` if you want to use former onion services.
+Only supports Onion Services in version 3 previously known as [Next Gen Onion Services](https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service) only if tor version >= [0.3.2.1](https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler)!
+
+Version 2 Onion Services are currently in a [deprecation phase](https://blog.torproject.org/v2-deprecation-timeline).
+If you need an v2 onion service, please use a previous release of this role!
 
 Role Variables
 --------------
@@ -66,46 +68,8 @@ onion_active: True
 onion_ipaddr: 192.168.3.12
 
 onion_services:
-  ssh:
-     onion_hostname:
-     onion_version: 2
-     onion_ports:
-        - [22, 22]
-     onion_private_key:
-  mail:
-     onion_hostname:
-     onion_version: 2
-     onion_ports:
-        - [25, 25] #[redirected_from, redirected_to]
-        - [587,587]
-     onion_private_key:
-  examplewithhostname:
-     onion_hostname: onionurl.onion
-     onion_version: 2
-     onion_ports:
-        - [25, 25]
-        - [587,587]
-     onion_private_key: |
-      -----BEGIN RSA PRIVATE KEY-----
-      the
-      private
-      key
-      -----END RSA PRIVATE KEY-----
-  absentonion:
-     onion_state: absent
-     onion_version: 2
-     onion_hostname: onionurl.onion
-     onion_ports:
-        - [25, 25]
-        - [587,587]
-     onion_private_key: |
-      -----BEGIN RSA PRIVATE KEY-----
-      the
-      private
-      key
-      -----END RSA PRIVATE KEY-----
   #
-  # nextgeneration onion only available in tor >= 0.3.2.1
+  # nextgeneration onion (v3) only available in tor >= 0.3.2.1
   # https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service
   #
   nextgenonion:
@@ -115,7 +79,15 @@ onion_services:
         - [587,587]
      onion_public_key_b64encoded: "\nPT0gZWQyNTUxOaYxLXB1YmxpYzogdHlwZTAgPT0AAABADSX6gVbfuClP6aBXz8V00oMw5Sovn0ZU\nftKei9UWmw==\n"
      onion_secret_key_b64encoded: "\nPT0gZWQyNTUxOaYxLXNlY3JldDogdHlwZTAgPT0AAAAYzbVMulElZeorlRoSKWG4VVVwWQN0lHac\nhpR5jLcqb2iuHQu7K9yrdRUrSUWW42gFUvl7lCDQPV7aGWQcf9TI\n"
-    
+
+  absentonion:
+     onion_state: absent
+     onion_hostname: onionv3url.onion
+     onion_ports:
+        - [25, 25]
+        - [587,587]
+     onion_public_key_b64encoded: "\nPT0gZWQyNTUxOaYxLXB1YmxpYzogdHlwZTAgPT0AAABADSX6gVbfuClP6aBXz8V00oMw5Sovn0ZU\nftKei9UWmw==\n"
+     onion_secret_key_b64encoded: "\nPT0gZWQyNTUxOaYxLXNlY3JldDogdHlwZTAgPT0AAAAYzbVMulElZeorlRoSKWG4VVVwWQN0lHac\nhpR5jLcqb2iuHQu7K9yrdRUrSUWW42gFUvl7lCDQPV7aGWQcf9TI\n"
 
 #
 # Example for torrc with special onion configurations
@@ -160,7 +132,7 @@ For developing and testing the role we use Github Actions, Molecule, and Vagrant
 Run local tests with:
 
 ```
-molecule test 
+molecule test
 ```
 
 License
