@@ -79,7 +79,6 @@ HidServAuth {{ client }}
 {% for servicename, hsproperties in onion_services|dictsort %}
 {% if hsproperties['onion_state']|default('present') != 'absent' %}
 HiddenServiceDir /var/lib/tor/{{ servicename }}/
-HiddenServiceVersion 3
 {% for port in hsproperties['onion_ports'] %}
 HiddenServicePort {{ port.0 }} {{ onion_ipaddr }}:{{ port.1}}
 {% endfor %}
