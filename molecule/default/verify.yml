@@ -49,6 +49,7 @@
       copy:
         src: "{{ item.path }}"
         dest: "{{ goss_test_directory }}/{{ item.path | basename }}"
+        mode: 0644
       with_items:
         - "{{ test_files.files }}"
 
