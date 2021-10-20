@@ -19,3 +19,4 @@ provisioner:
   become: true
 verifier:
   name: goss
+  directory: ./tests

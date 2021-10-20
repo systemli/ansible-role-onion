@@ -7,10 +7,10 @@
   hosts: all
   become: true
   vars:
-    goss_version: v0.3.13
+    goss_version: v0.3.16
     goss_arch: amd64
     goss_bin: /usr/local/bin/goss
-    goss_sha256sum: eb3522ff9682736ff61e2ad114de227de98debcf8a03ca66fcda3917577313e0.
+    goss_sha256sum: 827e354b48f93bce933f5efcd1f00dc82569c42a179cf2d384b040d8a80bfbfb
     goss_test_directory: /tmp/molecule/goss
     goss_format: documentation
   tasks:
