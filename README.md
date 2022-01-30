@@ -1,7 +1,7 @@
 ansible-role-onion
 ===========================
 
-[![Build Status](https://github.com/systemli/ansible-role-onion/workflows/Integration/badge.svg?branch=master)](https://github.com/systemli/ansible-role-onion/actions?query=workflow%3AIntegration)
+[![Build Status](https://github.com/systemli/ansible-role-onion/workflows/Integration/badge.svg?branch=main)](https://github.com/systemli/ansible-role-onion/actions?query=workflow%3AIntegration)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-onion-blue.svg)](https://galaxy.ansible.com/systemli/onion/)
 
 Install and configure one or multiple Tor Onion Services (formerly known as Hidden Services).
