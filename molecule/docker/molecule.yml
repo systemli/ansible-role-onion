@@ -1,6 +1,9 @@
 ---
 dependency:
   name: galaxy
+  options:
+    role-file: molecule/default/requirements.yml
+    force: false
 driver:
   name: docker
 platforms:
