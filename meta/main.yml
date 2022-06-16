@@ -22,4 +22,9 @@ galaxy_info:
     - web
   notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
-dependencies: []
+
+dependencies:
+  - role: systemli.apt_repositories
+    vars:
+      apt_repositories:
+        - preset: torproject
