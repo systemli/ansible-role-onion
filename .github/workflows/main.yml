@@ -48,4 +48,5 @@ jobs:
         uses: robertdebock/galaxy-action@1.2.1
         with:
           galaxy_api_key: ${{ secrets.galaxy_api_key }}
-    if: github.ref == 'refs/heads/main'
+          git_branch: main
+    if: github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/')
