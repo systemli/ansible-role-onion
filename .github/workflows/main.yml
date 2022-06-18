@@ -3,6 +3,8 @@ name: Integration
 on:
   pull_request:
   push:
+    branches:
+      - main
   schedule:
     # * is a special character in YAML so you have to quote this string
     # first of each month
@@ -21,10 +23,10 @@ jobs:
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3
 
       - name: Set up Python 3.
-        uses: actions/setup-python@v4.0.0
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -37,7 +39,6 @@ jobs:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
-
   release:
     name: Ansible Galaxy
     needs:
