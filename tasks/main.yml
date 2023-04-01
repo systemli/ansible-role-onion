@@ -169,9 +169,11 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   notify: stop tor
   when: not onion_active
 
-- include: monit.yml
+- name: Import monit tasks
+  import_tasks: monit.yml
   when: onion_monit_enabled
 
-- include: goss.yml
+- name: Import goss tasks
+  import_tasks: goss.yml
   tags:
     - goss
