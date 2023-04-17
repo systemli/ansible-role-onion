@@ -1,16 +1,16 @@
 ---
 # handlers file for onion
-- name: restart tor
+- name: Restart tor
   service:
     name: tor
     state: restarted
 
-- name: stop tor
+- name: Stop tor
   service:
     name: tor
     state: stopped
 
-- name: restart monit
+- name: Restart monit
   service:
     name: monit
     state: restarted
