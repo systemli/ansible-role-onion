@@ -50,9 +50,9 @@
   notify: Restart tor
 
 - name: Copy encoded public_key (only for onion v3)
-  shell: "executable=/bin/bash set -o pipefail &&\
+  shell:
+    cmd: "executable=/bin/bash set -o pipefail &&\
 echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
-  args:
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
   with_dict: "{{ onion_services }}"
   when:
@@ -74,9 +74,9 @@ echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - item.value.onion_state|default('present') == 'present'
 
 - name: Copy encoded secret_key (only for onion v3)
-  shell: "executable=/bin/bash set -o pipefail &&\
+  shell:
+    cmd: "executable=/bin/bash set -o pipefail &&\
 echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
-  args:
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
   with_dict: "{{ onion_services }}"
   when:
