@@ -21,7 +21,7 @@
         checksum: "sha256:{{ goss_sha256sum }}"
         mode: 0755
 
-    - name: Create Molecule directory for test files  # noqa 208
+    - name: Create Molecule directory for test files  # noqa risky-file-permissions
       file:
         path: "{{ goss_test_directory }}"
         state: directory
@@ -40,12 +40,7 @@
       changed_when: false
       become: false
 
-    - name: debug
-      debug:
-        msg: "{{ test_files.files }}"
-        verbosity: 3
-
-    - name: Copy Goss tests to remote  # noqa 208
+    - name: Copy Goss tests to remote  # noqa no-changed-when
       copy:
         src: "{{ item.path }}"
         dest: "{{ goss_test_directory }}/{{ item.path | basename }}"
