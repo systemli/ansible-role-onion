@@ -4,17 +4,17 @@
     pkg: gnupg
     update_cache: True
 
-- name: ensure tor is installed
+- name: Ensure tor is installed
   apt:
     pkg: tor
     state: "{{ onion_tor_apt_state }}"
 
-- name: install extra tor packages
+- name: Install extra tor packages
   apt:
     pkg: "{{ onion_apt_packages }}"
     state: present
 
-- name: ensure onion directory is present
+- name: Ensure onion directory is present
   file:
     path: "/var/lib/tor/{{ item.key }}/"
     owner: debian-tor
@@ -23,18 +23,18 @@
     state: directory
   with_dict: "{{ onion_services }}"
   when: item.value.onion_state|default('present') == 'present'
-  notify: restart tor
+  notify: Restart tor
 
-- name: ensure onion configuration is latest
+- name: Ensure onion configuration is latest
   template:
     src: torrc.j2
     dest: /etc/tor/torrc
     owner: root
     group: root
     mode: 0644
-  notify: restart tor
+  notify: Restart tor
 
-- name: ensure hostname file are present
+- name: Ensure hostname file are present
   template:
     src: hostname.j2
     dest: "/var/lib/tor/{{ item.key }}/hostname"
@@ -47,21 +47,22 @@
     - item.value.onion_hostname is defined
     - item.value.onion_hostname
     - item.value.onion_state|default('present') == 'present'
-  notify: restart tor
+  notify: Restart tor
 
-- name: copy encoded public_key (only for onion v3)
-  shell: "executable=/bin/bash set -o pipefail &&\
+- name: Copy encoded public_key (only for onion v3)
+  shell:
+    cmd: "set -o pipefail &&\
 echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
-  args:
+    executable: /bin/bash
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
   with_dict: "{{ onion_services }}"
   when:
     - item.value.onion_public_key_b64encoded is defined
     - item.value.onion_public_key_b64encoded
     - item.value.onion_state|default('present') == 'present'
-  notify: restart tor
+  notify: Restart tor
 
-- name: ensure file permissions are correct
+- name: Ensure file permissions are correct
   file:
     path: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
     owner: debian-tor
@@ -73,19 +74,20 @@ echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - item.value.onion_public_key_b64encoded
     - item.value.onion_state|default('present') == 'present'
 
-- name: copy encoded secret_key (only for onion v3)
-  shell: "executable=/bin/bash set -o pipefail &&\
+- name: Copy encoded secret_key (only for onion v3)
+  shell:
+    cmd: "set -o pipefail &&\
 echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
-  args:
+    executable: /bin/bash
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
   with_dict: "{{ onion_services }}"
   when:
     - item.value.onion_secret_key_b64encoded is defined
     - item.value.onion_secret_key_b64encoded
     - item.value.onion_state|default('present') == 'present'
-  notify: restart tor
+  notify: Restart tor
 
-- name: ensure file permissions are correct
+- name: Ensure file permissions are correct
   file:
     path: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
     owner: debian-tor
@@ -97,7 +99,7 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - item.value.onion_secret_key_b64encoded
     - item.value.onion_state|default('present') == 'present'
 
-- name: ensure onion directory is absent
+- name: Ensure onion directory is absent
   file:
     path: "/var/lib/tor/{{ item.key }}/"
     mode: 0700
@@ -107,16 +109,16 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
 
 # The hostname file won't be created until the tor service
 # is restarted, so bounce it before the `wait_for` task.
-- name: flush handlers
+- name: Flush handlers
   meta: flush_handlers
 
-- name: wait for onion
+- name: Wait for onion
   wait_for:
     path: "/var/lib/tor/{{ item.key }}/hostname"
   with_dict: "{{ onion_services }}"
   when: item.value.onion_state|default('present') != "absent"
 
-- name: read onion url
+- name: Read onion url
   command: cat "/var/lib/tor/{{ item.key }}/hostname"
   register: onion_hostname_results
   changed_when: false
@@ -125,7 +127,7 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - not item.value.onion_hostname|default(false)
     - item.value.onion_state|default('present') != "absent"
 
-- name: read onion v3 secret key
+- name: Read onion v3 secret key
   command: base64 "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
   register: onion_v3_secret_key_results
   changed_when: false
@@ -134,7 +136,7 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - not item.value.onion_secret_key_b64encoded|default(false)
     - item.value.onion_state|default('present') != "absent"
 
-- name: read onion v3 public key
+- name: Read onion v3 public key
   command: base64 "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
   register: onion_v3_public_key_results
   changed_when: false
@@ -143,30 +145,30 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - not item.value.onion_public_key_b64encoded|default(false)
     - item.value.onion_state|default('present') != "absent"
 
-- name: display onion url
+- name: Display onion url
   debug:
     msg: >-
-      {{ lookup('template', role_path+'/templates/display_hostnames.j2') }}
+      {{ lookup('template', role_path + '/templates/display_hostnames.j2') }}
 
-- name: display public key for v3 host
+- name: Display public key for v3 host
   debug:
     msg: >-
-      {{ lookup('template', role_path+'/templates/display_v3_public_keys.j2') }}
+      {{ lookup('template', role_path + '/templates/display_v3_public_keys.j2') }}
 
-- name: display secret key for v3 host
+- name: Display secret key for v3 host
   debug:
     msg: >-
-      {{ lookup('template', role_path+'/templates/display_v3_secret_keys.j2') }}
+      {{ lookup('template', role_path + '/templates/display_v3_secret_keys.j2') }}
 
 # dirty hack to stop tor, when server is not the current onion server,
 # restart handler above , would start tor with
 # same url and private key on two hosts
-- name: stop tor, (two servers are up, only one should act as HS)
+- name: Stop tor, (two servers are up, only one should act as HS)
   service:
     name: tor
     enabled: no
     state: stopped
-  notify: stop tor
+  notify: Stop tor
   when: not onion_active
 
 - name: Import monit tasks

@@ -1,4 +1,4 @@
 ---
 
 roles:
-  - systemli.apt_repositories
+  - name: systemli.apt_repositories

@@ -1,5 +1,5 @@
 ---
-- name: ensure monit configs are present
+- name: Ensure monit configs are present
   copy:
     src: "monit/conf.d/{{ item }}"
     dest: "/etc/monit/conf.d/{{ item }}"
