@@ -107,7 +107,7 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
 
 # The hostname file won't be created until the tor service
 # is restarted, so bounce it before the `wait_for` task.
-- name: flush handlers
+- name: Flush handlers
   meta: flush_handlers
 
 - name: Wait for onion
@@ -146,17 +146,17 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
 - name: Display onion url
   debug:
     msg: >-
-      {{ lookup('template', role_path+'/templates/display_hostnames.j2') }}
+      {{ lookup('template', role_path + '/templates/display_hostnames.j2') }}
 
 - name: Display public key for v3 host
   debug:
     msg: >-
-      {{ lookup('template', role_path+'/templates/display_v3_public_keys.j2') }}
+      {{ lookup('template', role_path + '/templates/display_v3_public_keys.j2') }}
 
 - name: Display secret key for v3 host
   debug:
     msg: >-
-      {{ lookup('template', role_path+'/templates/display_v3_secret_keys.j2') }}
+      {{ lookup('template', role_path + '/templates/display_v3_secret_keys.j2') }}
 
 # dirty hack to stop tor, when server is not the current onion server,
 # restart handler above , would start tor with
