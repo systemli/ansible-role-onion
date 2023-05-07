@@ -124,7 +124,7 @@ Testing & Development
 Tests
 -----
 
-For developing and testing the role we use Github Actions, ansible-lint, Molecule, and Vagrant.
+For developing and testing this role we use Github Actions, ansible-lint, Molecule, and Vagrant.
 
 Run local tests with:
 
