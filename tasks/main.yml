@@ -164,7 +164,7 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
 # restart handler above , would start tor with
 # same url and private key on two hosts
 - name: Stop tor, (two servers are up, only one should act as HS)
-  service:
+  ansible.builtin.systemd:
     name: tor
     enabled: no
     state: stopped
