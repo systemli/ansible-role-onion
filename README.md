@@ -127,7 +127,7 @@ Testing & Development
 Tests
 -----
 
-For developing and testing the role we use Github Actions, Molecule, and Vagrant. On the local environment you can easily test the role with
+For developing and testing the role we use Github Actions, Molecule, and Vagrant.
 
 Run local tests with:
 
