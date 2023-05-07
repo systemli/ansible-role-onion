@@ -14,9 +14,6 @@ Be careful: Using the default 127.0.0.1 as Onion Service IP-address could possib
 
 Only supports Onion Services in version 3 previously known as [Next Gen Onion Services](https://trac.torproject.org/projects/tor/wiki/doc/NextGenOnions#Howtosetupyourownprop224service) only if tor version >= [0.3.2.1](https://blog.torproject.org/tor-0321-alpha-released-support-next-gen-onion-services-and-kist-scheduler)!
 
-Version 2 Onion Services are currently in a [deprecation phase](https://blog.torproject.org/v2-deprecation-timeline).
-If you need an v2 onion service, please use a previous release of this role!
-
 Role Variables
 --------------
 
