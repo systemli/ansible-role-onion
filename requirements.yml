@@ -1,4 +1,8 @@
 ---
-
+collections:
+  - name: ansible.posix # docker
+    version: ">=1.4.0"
+  - name: community.docker
+    version: ">=3.0.2"
 roles:
   - name: systemli.apt_repositories
