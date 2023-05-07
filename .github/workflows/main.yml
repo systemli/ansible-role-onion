@@ -17,7 +17,7 @@ on:
 jobs:
   integration:
     name: Integration
-    uses: systemli/github-ansible-workflow/.github/workflows/ansible-integration-workflow.yaml@main
+    uses: systemli/github-ansible-workflow/.github/workflows/ansible-integration-workflow.yaml@molecule4
     with:
       distros: '[ "debian11", "debian10" ]'
       role-dependencies: |
