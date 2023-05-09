@@ -1,16 +1,16 @@
 ---
 # handlers file for onion
 - name: Restart tor
-  service:
+  ansible.builtin.systemd:
     name: tor
     state: restarted
 
 - name: Stop tor
-  service:
+  ansible.builtin.systemd:
     name: tor
     state: stopped
 
 - name: Restart monit
-  service:
+  ansible.builtin.systemd:
     name: monit
     state: restarted

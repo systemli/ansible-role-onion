@@ -8,15 +8,6 @@ platforms:
     box: debian/buster64
   - name: bullseye64
     box: debian/bullseye64
-#  - name: bionic64
-#    box: ubuntu/bionic64
-lint: |
-  set -e
-  yamllint .
-  ansible-lint
 provisioner:
   name: ansible
   become: true
-verifier:
-  name: goss
-  directory: ./tests
