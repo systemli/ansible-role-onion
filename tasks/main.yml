@@ -1,32 +1,32 @@
 ---
 - name: Ensure gpg is present
-  apt:
+  ansible.builtin.apt:
     pkg: gnupg
     update_cache: True
 
 - name: Ensure tor is installed
-  apt:
+  ansible.builtin.apt:
     pkg: tor
     state: "{{ onion_tor_apt_state }}"
 
 - name: Install extra tor packages
-  apt:
+  ansible.builtin.apt:
     pkg: "{{ onion_apt_packages }}"
     state: present
 
 - name: Ensure onion directory is present
-  file:
+  ansible.builtin.file:
     path: "/var/lib/tor/{{ item.key }}/"
     owner: debian-tor
     group: debian-tor
-    mode: 0700
+    mode: "0700"
     state: directory
   with_dict: "{{ onion_services }}"
   when: item.value.onion_state|default('present') == 'present'
   notify: Restart tor
 
 - name: Ensure onion configuration is latest
-  template:
+  ansible.builtin.template:
     src: torrc.j2
     dest: /etc/tor/torrc
     owner: root
@@ -35,12 +35,12 @@
   notify: Restart tor
 
 - name: Ensure hostname file are present
-  template:
+  ansible.builtin.template:
     src: hostname.j2
     dest: "/var/lib/tor/{{ item.key }}/hostname"
     owner: debian-tor
     group: debian-tor
-    mode: 0600
+    mode: "0600"
     backup: yes
   with_dict: "{{ onion_services }}"
   when:
@@ -50,9 +50,9 @@
   notify: Restart tor
 
 - name: Copy encoded public_key (only for onion v3)
-  shell:
+  ansible.builtin.shell:
     cmd: "set -o pipefail &&\
-echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
+      echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
     executable: /bin/bash
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
   with_dict: "{{ onion_services }}"
@@ -63,7 +63,7 @@ echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   notify: Restart tor
 
 - name: Ensure file permissions are correct
-  file:
+  ansible.builtin.file:
     path: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
     owner: debian-tor
     group: debian-tor
@@ -75,9 +75,9 @@ echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - item.value.onion_state|default('present') == 'present'
 
 - name: Copy encoded secret_key (only for onion v3)
-  shell:
+  ansible.builtin.shell:
     cmd: "set -o pipefail &&\
-echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+      echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
     executable: /bin/bash
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
   with_dict: "{{ onion_services }}"
@@ -88,11 +88,11 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   notify: Restart tor
 
 - name: Ensure file permissions are correct
-  file:
+  ansible.builtin.file:
     path: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
     owner: debian-tor
     group: debian-tor
-    mode: 0600
+    mode: "0600"
   with_dict: "{{ onion_services }}"
   when:
     - item.value.onion_secret_key_b64encoded is defined
@@ -100,9 +100,9 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - item.value.onion_state|default('present') == 'present'
 
 - name: Ensure onion directory is absent
-  file:
+  ansible.builtin.file:
     path: "/var/lib/tor/{{ item.key }}/"
-    mode: 0700
+    mode: "0700"
     state: absent
   with_dict: "{{ onion_services }}"
   when: item.value.onion_state|default('present') == "absent"
@@ -110,16 +110,16 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
 # The hostname file won't be created until the tor service
 # is restarted, so bounce it before the `wait_for` task.
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Wait for onion
-  wait_for:
+  ansible.builtin.wait_for:
     path: "/var/lib/tor/{{ item.key }}/hostname"
   with_dict: "{{ onion_services }}"
   when: item.value.onion_state|default('present') != "absent"
 
 - name: Read onion url
-  command: cat "/var/lib/tor/{{ item.key }}/hostname"
+  ansible.builtin.command: cat "/var/lib/tor/{{ item.key }}/hostname"
   register: onion_hostname_results
   changed_when: false
   with_dict: "{{ onion_services }}"
@@ -128,7 +128,7 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - item.value.onion_state|default('present') != "absent"
 
 - name: Read onion v3 secret key
-  command: base64 "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+  ansible.builtin.command: base64 "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
   register: onion_v3_secret_key_results
   changed_when: false
   with_dict: "{{ onion_services }}"
@@ -137,7 +137,7 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - item.value.onion_state|default('present') != "absent"
 
 - name: Read onion v3 public key
-  command: base64 "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
+  ansible.builtin.command: base64 "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
   register: onion_v3_public_key_results
   changed_when: false
   with_dict: "{{ onion_services }}"
@@ -146,17 +146,17 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
     - item.value.onion_state|default('present') != "absent"
 
 - name: Display onion url
-  debug:
+  ansible.builtin.debug:
     msg: >-
       {{ lookup('template', role_path + '/templates/display_hostnames.j2') }}
 
 - name: Display public key for v3 host
-  debug:
+  ansible.builtin.debug:
     msg: >-
       {{ lookup('template', role_path + '/templates/display_v3_public_keys.j2') }}
 
 - name: Display secret key for v3 host
-  debug:
+  ansible.builtin.debug:
     msg: >-
       {{ lookup('template', role_path + '/templates/display_v3_secret_keys.j2') }}
 
@@ -172,10 +172,10 @@ echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/
   when: not onion_active
 
 - name: Import monit tasks
-  import_tasks: monit.yml
+  ansible.builtin.import_tasks: monit.yml
   when: onion_monit_enabled
 
 - name: Import goss tasks
-  import_tasks: goss.yml
+  ansible.builtin.import_tasks: goss.yml
   tags:
     - goss

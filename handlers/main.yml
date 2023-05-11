@@ -1,5 +1,4 @@
 ---
-# handlers file for onion
 - name: Restart tor
   ansible.builtin.systemd:
     name: tor
