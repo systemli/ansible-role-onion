@@ -3,11 +3,13 @@ driver:
   name: vagrant
   provider:
     name: virtualbox
+
 platforms:
-  - name: buster64
-    box: debian/buster64
-  - name: bullseye64
-    box: debian/bullseye64
+  - name: bookworm64
+    box: debian/bookworm64
+
 provisioner:
   name: ansible
+  ansible_args:
+    - --diff
   become: true

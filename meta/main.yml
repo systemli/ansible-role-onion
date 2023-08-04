@@ -13,8 +13,8 @@ galaxy_info:
         - bionic
     - name: Debian
       versions:
-        - stretch
-        - buster
+        - bookworm
+        - bullseye
   galaxy_tags:
     - networking
     - system
