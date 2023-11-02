@@ -1,4 +1,4 @@
-ansible-role-onion
+ansiblt-role-onion
 ===========================
 
 [![Build Status](https://github.com/systemli/ansible-role-onion/workflows/Integration/badge.svg?branch=main)](https://github.com/systemli/ansible-role-onion/actions?query=workflow%3AIntegration)
@@ -116,10 +116,6 @@ onions_configuration:
 onion_hid_serv_auth:
   - "r7w3xdf3r5smxokv.onion p0xMVci7ffeQFA4IWkcBxR # client: admin"
 ```
-
-
-Testing & Development
----------------------
 
 Tests
 -----
