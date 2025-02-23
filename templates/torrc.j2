@@ -94,6 +94,7 @@ HiddenServicePoWQueueBurst {{ hsproperties['onion_hidden_service_pow_queue_burst
 {% if hsproperties['onion_compiled_proof_of_work_hash'] is defined %}
 CompiledProofOfWorkHash {{ hsproperties['onion_compiled_proof_of_work_hash'] }}
 {% endif %}
+
 {% endif %}
 {% for client in hsproperties['onion_authorized_clients']|default([]) %}
 HiddenServiceAuthorizeClient stealth {{ client }}
