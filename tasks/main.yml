@@ -169,8 +169,3 @@
 - name: Import monit tasks
   ansible.builtin.import_tasks: monit.yml
   when: onion_monit_enabled
-
-- name: Import goss tasks
-  ansible.builtin.import_tasks: goss.yml
-  tags:
-    - goss
