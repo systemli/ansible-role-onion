@@ -9,12 +9,12 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - xenial
-        - bionic
+        - noble
+        - jammy
     - name: Debian
       versions:
+        - trixie
         - bookworm
-        - bullseye
   galaxy_tags:
     - networking
     - system

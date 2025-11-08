@@ -5,8 +5,8 @@ driver:
     name: virtualbox
 
 platforms:
-  - name: bookworm64
-    box: debian/bookworm64
+  - name: trixie64
+    box: debian/trixie64
 
 provisioner:
   name: ansible
