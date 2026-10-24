@@ -8,7 +8,7 @@ Ansible role that installs and configures Tor Onion Services (v3) on Debian (boo
 - `tasks/`: `main.yml` (tor, onion services, keys) and `monit.yml` (optional monit checks)
 - `templates/`: `torrc.j2`, hostname and key templates; `files/`: apt and monit config
 - `handlers/`, `meta/`: handlers and role metadata
-- `molecule/default/`: integration test (Docker); depends on `requirements.yml`
+- `molecule/default/`: integration test (Docker) with its own `requirements.yml` for role dependencies
 
 ## Checks
 
