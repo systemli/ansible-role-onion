@@ -1,0 +1,47 @@
+---
+argument_specs:
+  main:
+    short_description: Install and configure Tor Onion Services
+    description:
+      - Installs tor and configures one or multiple v3 onion services.
+    options:
+      onion_active:
+        type: bool
+        description:
+          - If false, tor is stopped and disabled on this host.
+      onion_ipaddr:
+        type: str
+        description:
+          - IP address of the service the onion ports are forwarded to.
+      onion_tor_apt_state:
+        type: str
+        description:
+          - State of the tor package.
+      onion_tor_apt_key_id:
+        type: str
+        description:
+          - Key ID of the Tor Project APT key.
+      onion_apt_packages:
+        type: list
+        elements: str
+        description:
+          - Additional packages to install.
+      onion_services:
+        type: dict
+        description:
+          - Onion services, keyed by service name (used as directory name below C(/var/lib/tor)).
+          - Each value is a dict with the keys C(onion_hostname), C(onion_ports), C(onion_authorized_clients), C(onion_state), C(onion_public_key_b64encoded), C(onion_secret_key_b64encoded), C(onion_hidden_service_pow_defenses_enabled), C(onion_hidden_service_pow_queue_rate), C(onion_hidden_service_pow_queue_burst) and C(onion_compiled_proof_of_work_hash).
+          - C(onion_ports) is a list of C([onion port, local port]) pairs. C(onion_state) is C(present) (default) or C(absent).
+      onions_configuration:
+        type: dict
+        description:
+          - Additional global torrc options as key/value pairs.
+      onion_hid_serv_auth:
+        type: list
+        elements: str
+        description:
+          - Auth cookies for connecting to authenticated onion services.
+      onion_monit_enabled:
+        type: bool
+        description:
+          - Install a monit configuration for tor.

@@ -22,13 +22,14 @@ Role Variables
 onion_active: True
 onion_ipaddr: 127.0.0.1
 onion_tor_apt_state: present
+onion_tor_apt_key_id: A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
+onion_apt_packages: ["deb.torproject.org-keyring"]
 onion_services:
   ssh:
     onion_hostname:
     onion_ports:
       - [22, 22]
     onion_authorized_clients: []
-    onion_private_key:
 
 onions_configuration:
   SocksPort: 9050
@@ -121,7 +122,7 @@ Tests
 -----
 
 For developing and testing this role we use GitHub Actions, ansible-lint and Molecule (Docker driver).
-CI runs the role on Debian 12 (bookworm) and Debian 13 (trixie). `meta/main.yml` additionally lists Ubuntu noble and jammy, which are not covered by CI.
+CI runs the role on Debian 12 (bookworm) and Debian 13 (trixie).
 
 Requirements: Docker or Podman, `molecule`, `molecule-plugins[docker]` and `ansible-lint`.
 
