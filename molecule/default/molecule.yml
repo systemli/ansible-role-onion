@@ -4,22 +4,16 @@ driver:
 
 platforms:
   - name: debian13
-    image: "geerlingguy/docker-debian12-ansible:latest"
+    image: "geerlingguy/docker-debian13-ansible:latest"
     command: ""
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
       - /var/lib/containerd
     cgroupns_mode: host
-    privleged: true
+    privileged: true
     pre_build_image: true
 
 provisioner:
   name: ansible
   ansible_args:
     - --diff
-  become: true
-
-dependency:
-  name: galaxy
-  options:
-    requirements-file: requirements.yml

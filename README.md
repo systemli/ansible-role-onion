@@ -1,5 +1,5 @@
-ansiblt-role-onion
-===========================
+ansible-role-onion
+==================
 
 [![Build Status](https://github.com/systemli/ansible-role-onion/workflows/Integration/badge.svg?branch=main)](https://github.com/systemli/ansible-role-onion/actions?query=workflow%3AIntegration)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-onion-blue.svg)](https://galaxy.ansible.com/systemli/onion/)
@@ -120,12 +120,23 @@ onion_hid_serv_auth:
 Tests
 -----
 
-For developing and testing this role we use Github Actions, ansible-lint, Molecule, and Vagrant.
+For developing and testing this role we use GitHub Actions, ansible-lint and Molecule (Docker driver).
+CI runs the role on Debian 12 (bookworm) and Debian 13 (trixie). `meta/main.yml` additionally lists Ubuntu noble and jammy, which are not covered by CI.
+
+Requirements: Docker or Podman, `molecule`, `molecule-plugins[docker]` and `ansible-lint`.
 
 Run local tests with:
 
 ```
 molecule test
+```
+
+Or keep the container for debugging:
+
+```
+molecule converge
+molecule login
+molecule destroy
 ```
 
 License
