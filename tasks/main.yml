@@ -2,7 +2,7 @@
 - name: Ensure gpg is present
   ansible.builtin.apt:
     pkg: gnupg
-    update_cache: True
+    update_cache: true
 
 - name: Ensure tor is installed
   ansible.builtin.apt:
@@ -31,7 +31,7 @@
     dest: /etc/tor/torrc
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: Restart tor
 
 - name: Ensure hostname files are present
@@ -41,7 +41,7 @@
     owner: debian-tor
     group: debian-tor
     mode: "0600"
-    backup: yes
+    backup: true
   with_dict: "{{ onion_services }}"
   when:
     - item.value.onion_hostname|default(None) != None
@@ -50,8 +50,7 @@
 
 - name: Copy encoded public_key (only for onion v3)
   ansible.builtin.shell:
-    cmd: "set -o pipefail &&\
-      echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
+    cmd: "set -o pipefail &&echo \"{{ item.value.onion_public_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
     executable: /bin/bash
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
   with_dict: "{{ onion_services }}"
@@ -65,7 +64,7 @@
     path: "/var/lib/tor/{{ item.key }}/hs_ed25519_public_key"
     owner: debian-tor
     group: debian-tor
-    mode: 0600
+    mode: "0600"
   with_dict: "{{ onion_services }}"
   when:
     - item.value.onion_public_key_b64encoded|default('') != ''
@@ -73,8 +72,7 @@
 
 - name: Copy encoded secret_key (only for onion v3)
   ansible.builtin.shell:
-    cmd: "set -o pipefail &&\
-      echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
+    cmd: "set -o pipefail &&echo \"{{ item.value.onion_secret_key_b64encoded }}\" | base64 -d >/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
     executable: /bin/bash
     creates: "/var/lib/tor/{{ item.key }}/hs_ed25519_secret_key"
   with_dict: "{{ onion_services }}"
@@ -161,7 +159,7 @@
 - name: Stop tor, (two servers are up, only one should act as HS)
   ansible.builtin.systemd:
     name: tor
-    enabled: no
+    enabled: false
     state: stopped
   notify: Stop tor
   when: not onion_active

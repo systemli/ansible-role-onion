@@ -1,6 +1,6 @@
 ---
 # defaults file for onion
-onion_active: True
+onion_active: true
 onion_ipaddr: 127.0.0.1
 onion_tor_apt_state: present
 onion_tor_apt_key_id: A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
@@ -20,4 +20,4 @@ onions_configuration:
 #
 onion_hid_serv_auth: []
 
-onion_monit_enabled: False
+onion_monit_enabled: false

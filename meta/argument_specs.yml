@@ -30,7 +30,9 @@ argument_specs:
         type: dict
         description:
           - Onion services, keyed by service name (used as directory name below C(/var/lib/tor)).
-          - Each value is a dict with the keys C(onion_hostname), C(onion_ports), C(onion_authorized_clients), C(onion_state), C(onion_public_key_b64encoded), C(onion_secret_key_b64encoded), C(onion_hidden_service_pow_defenses_enabled), C(onion_hidden_service_pow_queue_rate), C(onion_hidden_service_pow_queue_burst) and C(onion_compiled_proof_of_work_hash).
+          - Each value is a dict with the keys C(onion_hostname), C(onion_ports), C(onion_authorized_clients), C(onion_state), C(onion_public_key_b64encoded),
+            C(onion_secret_key_b64encoded), C(onion_hidden_service_pow_defenses_enabled), C(onion_hidden_service_pow_queue_rate),
+            C(onion_hidden_service_pow_queue_burst) and C(onion_compiled_proof_of_work_hash).
           - C(onion_ports) is a list of C([onion port, local port]) pairs. C(onion_state) is C(present) (default) or C(absent).
       onions_configuration:
         type: dict
