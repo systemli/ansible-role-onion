@@ -121,7 +121,7 @@ Tests
 -----
 
 For developing and testing this role we use GitHub Actions, ansible-lint and Molecule (Docker driver).
-CI runs the role on Debian 12 (bookworm) and Debian 13 (trixie). `meta/main.yml` additionally lists Ubuntu noble and jammy, which are not covered by CI.
+CI runs the role on Debian 12 (bookworm) and Debian 13 (trixie).
 
 Requirements: Docker or Podman, `molecule`, `molecule-plugins[docker]` and `ansible-lint`.
 
