@@ -9,55 +9,39 @@ argument_specs:
         type: bool
         description:
           - If false, tor is stopped and disabled on this host.
-        default: true
       onion_ipaddr:
         type: str
         description:
           - IP address of the service the onion ports are forwarded to.
-        default: 127.0.0.1
       onion_tor_apt_state:
         type: str
         description:
           - State of the tor package.
-        default: present
       onion_tor_apt_key_id:
         type: str
         description:
           - Key ID of the Tor Project APT key.
-        default: A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
       onion_apt_packages:
         type: list
         elements: str
         description:
           - Additional packages to install.
-        default: [deb.torproject.org-keyring]
       onion_services:
         type: dict
         description:
           - Onion services, keyed by service name (used as directory name below C(/var/lib/tor)).
           - Each value is a dict with the keys C(onion_hostname), C(onion_ports), C(onion_authorized_clients), C(onion_state), C(onion_public_key_b64encoded), C(onion_secret_key_b64encoded), C(onion_hidden_service_pow_defenses_enabled), C(onion_hidden_service_pow_queue_rate), C(onion_hidden_service_pow_queue_burst) and C(onion_compiled_proof_of_work_hash).
           - C(onion_ports) is a list of C([onion port, local port]) pairs. C(onion_state) is C(present) (default) or C(absent).
-        default:
-          ssh:
-            onion_hostname:
-            onion_ports:
-              - [22, 22]
-            onion_authorized_clients: []
       onions_configuration:
         type: dict
         description:
           - Additional global torrc options as key/value pairs.
-        default:
-          SocksPort: 9050
-          SocksPolicy: reject *
       onion_hid_serv_auth:
         type: list
         elements: str
         description:
           - Auth cookies for connecting to authenticated onion services.
-        default: []
       onion_monit_enabled:
         type: bool
         description:
           - Install a monit configuration for tor.
-        default: false
